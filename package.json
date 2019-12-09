@@ -1,0 +1,52 @@
+{
+  "name": "koa-ts",
+  "version": "1.0.0",
+  "description": "使用typescript开发koa2",
+  "main": "app.ts",
+  "scripts": {
+    "start": "npm run build && node ./build/app.js",
+    "build": "npm run lint && tsc",
+    "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
+    "watch": "nodemon --watch 'src/**/*' -e ts --exec 'ts-node' ./src/app.ts",
+    "lint": "node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --force",
+    "fix": "node_modules/tslint/bin/tslint --fix ./src/**/*.ts"
+  },
+  "keywords": [
+    "koa2",
+    "typescript"
+  ],
+  "author": "jkhuangfu",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "cross-env": "^6.0.3",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.12.3",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.1",
+    "log4js": "^6.1.0",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.1",
+    "redis": "^2.8.0",
+    "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.0",
+    "@types/koa-router": "^7.0.42",
+    "@types/koa-session": "^5.10.1",
+    "@types/koa-static": "^4.0.1",
+    "@types/koa-views": "^2.0.4",
+    "@types/log4js": "^2.3.5",
+    "@types/mysql": "^2.15.8",
+    "@types/node": "^12.12.14",
+    "@types/redis": "^2.8.14",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1"
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": []
+}
