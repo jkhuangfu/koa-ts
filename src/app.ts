@@ -6,9 +6,7 @@ import * as session from 'koa-session';
 import * as views from 'koa-views';
 import * as koaStatic from 'koa-static';
 import {globInit} from './util';
-import router from './routes/user';
-import View from './routes/view';
-
+import routes from './routes';
 const bodyParse = koaBody({
     multipart: true, // 支持文件上传
     formidable: {
@@ -17,7 +15,6 @@ const bodyParse = koaBody({
         maxFileSize: 2 * 1024 * 1024
     }
 });
-
 
 const sessionConfig = {
     key: 'dr_net',
@@ -36,7 +33,8 @@ const errMid = async (ctx: Koa.Context, next: Koa.Next) => {
         ctx.response.type = 'json';
         ctx.response.body = {
             code: ctx.response.status,
-            message: err.message
+            message: err.message,
+            timestamp: Date.now()
         };
         ctx.app.emit('error', err, ctx);
     }
@@ -48,6 +46,7 @@ const errMid = async (ctx: Koa.Context, next: Koa.Next) => {
     app
         .use(errMid)
         .use(bodyParse)
+
         // session 中间件
         .use(session(sessionConfig, app))
         // 渲染前端页面 模板引擎为 ejs | html
@@ -56,10 +55,9 @@ const errMid = async (ctx: Koa.Context, next: Koa.Next) => {
                 extension: 'html' // html
             })
         )
+        .use(routes)
         // 配置静态资源加载中间件
         .use(koaStatic(path.join(__dirname, 'public')))
-        .use(router)
-        .use(View)
         .on('error', err => {
             LOG4.error(err);
         })

@@ -1,4 +1,4 @@
-import {configure, getLogger} from 'log4js';
+import { configure, getLogger } from 'log4js';
 configure({
     appenders: {
         ruleConsole: { type: 'console' },
@@ -13,7 +13,7 @@ configure({
     },
     pm2: true,
     categories: {
-        default: { appenders: ['app'], level: 'debug' }
+        default: { appenders: ['app'], level: 'ALL' }
     }
 });
 const log4 = getLogger('app');
