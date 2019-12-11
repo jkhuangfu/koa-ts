@@ -1,19 +1,19 @@
-export interface SQL {
+interface MysqlConfig {
     host: string;
     user: string;
-    password: string | number;
+    password: string;
     database: string;
     port: number;
 }
 
-export const mysqlDev: SQL = {
+export const mysqlDev: MysqlConfig = {
     host: '127.0.0.1',
     user: 'root',
     password: 'huangfu@1993',
     database: 'blog',
     port: 3306
 };
-export const mysqlOnline: SQL = {
+export const mysqlOnline: MysqlConfig = {
     host: '127.0.0.1',
     user: 'root',
     password: 'Huangfu@1993!',

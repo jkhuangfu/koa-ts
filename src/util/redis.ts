@@ -11,7 +11,7 @@ client.on('connect', () => {
     LOG4.info('redis连接成功...');
 });
 
-export default class redisDb {
+export default class RedisDb {
     /**
      * @description 设置键值对
      * @param key 键

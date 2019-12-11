@@ -1,4 +1,3 @@
-/// <reference path="../typings/global.d.ts" />
 import * as Koa from 'koa';
 import * as koaBody from 'koa-body';
 import * as path from 'path';

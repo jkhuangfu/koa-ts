@@ -1,4 +1,4 @@
-import { BaseContext } from 'koa';
+import {BaseContext} from 'koa';
 import router from './router';
 
 router
@@ -37,4 +37,7 @@ router
     })
     .get('/delete', (ctx: BaseContext) => {
         ctx.body = 'this is user delete page' + JSON.stringify(ctx.session.user);
+    })
+    .get('/he', ctx => {
+        ctx.body = 'this is redirect page';
     });

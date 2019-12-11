@@ -1,5 +1,4 @@
 import {hash, data_query, log4, redisDb, response} from '../src/util';
-import {BaseContext} from 'koa';
 
 type HASH_TYPE = typeof hash;
 type DATA_QUERY = typeof data_query;
@@ -14,12 +13,4 @@ declare global {
     const response: RES_TYPE;
 }
 
-declare module "koa-body";
 
-
-declare module 'koa' {
-    interface BaseContext {
-        render(viewPath: string, locals?: any): Promise<void>;
-        session: { [index: string]: any };
-    }
-}
