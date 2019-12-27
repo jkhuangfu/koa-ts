@@ -22,4 +22,4 @@ yarn-error.log*
 *.sw?
 
 # Local Upload Files
-src/public/upload/*
+src/upload/*
