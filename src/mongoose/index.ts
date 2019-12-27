@@ -9,23 +9,23 @@ mongoose.connect(connString, {
 
 // MongoDB连接成功后回调，这里仅输出一行日志
 mongoose.connection.on('connected', () => {
-  LOG4.info('Mongoose 连接至 ' + connString);
+  LOG4.app.info('Mongoose 连接至 ' + connString);
 });
 
 // MongoDB连接出错后回调，这里仅输出一行日志
 mongoose.connection.on('error', err => {
-  LOG4.error('Mongoose connection error: ' + err);
+  LOG4.app.error('Mongoose connection error: ' + err);
 });
 
 // MongoDB连接断开后回调，这里仅输出一行日志
 mongoose.connection.on('disconnected', () => {
-  LOG4.info('Mongoose 链接断开');
+  LOG4.app.info('Mongoose 链接断开');
 });
 
 // 当前进程退出之前关闭MongoDB连接
 process.on('SIGINT', () => {
   mongoose.connection.close(() => {
-    LOG4.info('Mongoose default connection closed through app termination');
+    LOG4.app.info('Mongoose default connection closed through app termination');
     process.exit(0);
   });
 });

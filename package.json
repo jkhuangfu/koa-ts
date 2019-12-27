@@ -4,7 +4,8 @@
   "description": "使用typescript开发koa2",
   "main": "app.ts",
   "scripts": {
-    "start": "npm run build && node ./build/app.js",
+    "start": "npm run build && cross-env NODE_ENV=production pm2 start ./start.json",
+    "start-": "cross-env NODE_ENV=production pm2 start ./start.json",
     "build": "npm run lint && tsc",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
     "watch": "nodemon --watch 'src/**/*' -e ts --exec 'ts-node' ./src/app.ts",

@@ -1,0 +1,13 @@
+{
+  "apps": {
+    "name": "node_server",
+    "script": "./build/app.js",
+    "args": "--abort-on-uncaught-exception",
+    "watch": ["build"],
+    "watch_delay": 1000,
+    "ignore_watch": ["build/upload"],
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "instance_var": "INSTANCE_ID",
+    "exec_mode": "cluster"
+  }
+}

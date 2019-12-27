@@ -5,10 +5,10 @@ const { NODE_ENV } = process.env;
 const { ip, port } = NODE_ENV === 'development' ? configDev : configProd;
 const client = redis.createClient(port, ip);
 client.on('error', err => {
-  LOG4.error('redis error：' + err);
+  LOG4.app.error('redis error：' + err);
 });
 client.on('connect', () => {
-  LOG4.info('redis连接成功...');
+  LOG4.app.info('redis连接成功...');
 });
 
 export default class RedisDb {
@@ -23,7 +23,7 @@ export default class RedisDb {
     return new Promise(resolve => {
       client.set(key, value, (err, result) => {
         if (err) {
-          LOG4.error('redis插入失败：' + err);
+          LOG4.http.error('redis插入失败：' + err);
           resolve(err);
           return false;
         }
@@ -44,7 +44,7 @@ export default class RedisDb {
     return new Promise(resolve => {
       client.get(key, (err, result) => {
         if (err) {
-          LOG4.error('redis获取失败：' + err);
+          LOG4.http.error('redis获取失败：' + err);
           resolve(err);
           return false;
         }
