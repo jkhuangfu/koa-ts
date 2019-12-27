@@ -2,9 +2,9 @@ import * as Koa from 'koa';
 import * as Route from 'koa-router';
 import routeSource from '../../routes';
 
-const Router = new Route<Koa.DefaultContext, Koa.Context>();
+const router = new Route<Koa.DefaultContext, Koa.Context>();
 
-interface middleware {
+interface RouterMiddleware {
   [key: string]: (
     context: Koa.ParameterizedContext<
       Koa.DefaultContext,
@@ -14,10 +14,10 @@ interface middleware {
   ) => any;
 }
 
-const routes: middleware = routeSource;
+const routes: RouterMiddleware = routeSource;
 
-for (let i in routes) {
-  Router.use('', routes[i]);
+for (const i of Object.keys(routes)) {
+  router.use('', routes[i]);
 }
 
-export default Router.routes();
+export default router.routes();

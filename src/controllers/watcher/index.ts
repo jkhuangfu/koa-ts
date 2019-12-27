@@ -4,7 +4,7 @@ import * as chokidar from 'chokidar';
 import * as AdmZip from 'adm-zip';
 const watchDir = path.join(process.cwd(), '/src/upload/');
 // 创建上传目录
-fs.exists(watchDir, function(exists) {
+fs.exists(watchDir, exists => {
   if (!exists) fs.mkdirSync(watchDir);
 });
 
