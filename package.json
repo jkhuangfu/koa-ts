@@ -8,8 +8,8 @@
     "build": "npm run lint && tsc",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
     "watch": "nodemon --watch 'src/**/*' -e ts --exec 'ts-node' ./src/app.ts",
-    "lint": "node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --force",
-    "fix": "node_modules/tslint/bin/tslint --fix ./src/**/*.ts"
+    "lint": "node_modules/tslint/bin/tslint --project tsconfig.json --config tslint.json",
+    "fix": "node_modules/tslint/bin/tslint --fix -c tslint.json ./src/**/*.ts"
   },
   "keywords": [
     "koa2",
