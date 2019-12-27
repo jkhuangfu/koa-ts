@@ -1,6 +1,5 @@
-import router from './router';
+import user from './user';
+import file from './file';
+import view from './view';
 
-require('./user');
-require('./view');
-
-export default router.routes();
+export default { user, file, view };
