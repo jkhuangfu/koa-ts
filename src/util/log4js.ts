@@ -1,10 +1,12 @@
 import * as Log4js from 'log4js';
-interface LOG4 {
+interface LOG4_METHODS {
   [key: string]: Log4js.Logger;
 }
 Log4js.configure({
   appenders: {
-    ruleConsole: { type: 'console' },
+    stdout: {// 控制台输出
+      type: 'stdout'
+    },
     app: {
       type: 'dateFile',
       filename: '../logs/app',
@@ -34,13 +36,13 @@ Log4js.configure({
   },
   pm2: true,
   categories: {
-    app: { appenders: ['app'], level: 'all' },
-    http: { appenders: ['http'], level: 'all' },
-    error: { appenders: ['error'], level: 'error' },
-    default: { appenders: ['ruleConsole'], level: 'all' }
+    default: { appenders: ['stdout'], level: 'all' },
+    app: { appenders: ['stdout','app'], level: 'all' },
+    http: { appenders: ['stdout','http'], level: 'all' },
+    error: { appenders: ['stdout','error'], level: 'error' },
   }
 });
-const log4: LOG4 = {};
+const log4: LOG4_METHODS = {};
 log4.app = Log4js.getLogger('app');
 log4.http = Log4js.getLogger('http');
 log4.error = Log4js.getLogger('error');
