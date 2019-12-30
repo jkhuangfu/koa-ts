@@ -1,10 +1,11 @@
 import * as Log4js from 'log4js';
-interface LOG4_METHODS {
+interface LOG4METHODS {
   [key: string]: Log4js.Logger;
 }
 Log4js.configure({
   appenders: {
-    stdout: {// 控制台输出
+    stdout: {
+      // 控制台输出
       type: 'stdout'
     },
     app: {
@@ -37,12 +38,12 @@ Log4js.configure({
   pm2: true,
   categories: {
     default: { appenders: ['stdout'], level: 'all' },
-    app: { appenders: ['stdout','app'], level: 'all' },
-    http: { appenders: ['stdout','http'], level: 'all' },
-    error: { appenders: ['stdout','error'], level: 'error' },
+    app: { appenders: ['stdout', 'app'], level: 'all' },
+    http: { appenders: ['stdout', 'http'], level: 'all' },
+    error: { appenders: ['stdout', 'error'], level: 'error' }
   }
 });
-const log4: LOG4_METHODS = {};
+const log4: LOG4METHODS = {};
 log4.app = Log4js.getLogger('app');
 log4.http = Log4js.getLogger('http');
 log4.error = Log4js.getLogger('error');

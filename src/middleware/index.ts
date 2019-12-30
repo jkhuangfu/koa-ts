@@ -1,8 +1,10 @@
-import err from './handleError';
+import trace from './trace';
 import router from './route';
 import koaBody from './koa-body';
+import koaSession from './session';
 export default {
-  err,
+  trace,
   router,
-  koaBody
+  koaBody,
+  koaSession
 };

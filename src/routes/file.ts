@@ -5,9 +5,13 @@ import '../controllers/watcher';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/file')
-  .post('/upload', async ctx => {
-    const res = await File.upload(ctx);
-    response(ctx, res.length ? 200 : 500);
+  .post('/multi/upload', async ctx => {
+    const res = await File.MultiFile(ctx);
+    response(ctx, res ? 200 : 500);
+  })
+  .post('/single/upload', async ctx => {
+    const res = await File.SingleFile(ctx);
+    response(ctx, res ? 200 : 500);
   })
   .post('/query', async ctx => {
     const res = await File.query(ctx);
