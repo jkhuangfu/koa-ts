@@ -54,6 +54,7 @@
     "@types/mysql": "^2.15.8",
     "@types/node": "^12.12.14",
     "@types/redis": "^2.8.14",
-    "ts-node-dev": "^1.0.0-pre.44"
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1"
   }
 }
