@@ -16,9 +16,6 @@ router
   .post('/query', async ctx => {
     const res = await File.query(ctx);
     response(ctx, res ? 200 : 500, { data: res });
-  })
-  .get('/', async ctx => {
-    await ctx.render('index');
   });
 
 export default router.routes();

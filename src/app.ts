@@ -2,6 +2,7 @@ import * as Koa from 'koa';
 import * as path from 'path';
 import * as views from 'koa-views';
 import * as koaStatic from 'koa-static';
+import * as helmet from 'koa-helmet';
 import { globInit } from './util';
 import middleware from './middleware';
 import './mongoose';
@@ -12,6 +13,7 @@ import './mongoose';
   await globInit();
   app
     .use(middleware.trace)
+    .use(helmet())
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
     .use(
