@@ -16,11 +16,7 @@ import './mongoose';
     .use(helmet())
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
-    .use(
-      views(path.join(__dirname, 'views'), {
-        extension: 'html'
-      })
-    )
+    .use(views(path.join(__dirname, 'views'), { extension: 'html' }))
     .use(middleware.router)
     .use(koaStatic(path.join(__dirname, 'public')))
     .on('error', err => {
