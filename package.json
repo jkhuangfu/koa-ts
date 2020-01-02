@@ -4,9 +4,10 @@
   "description": "使用typescript开发koa2",
   "main": "app.ts",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production pm2 start ./start.json",
-    "start-": "cross-env NODE_ENV=production pm2 start ./start.json",
-    "build": "npm run lint && tsc",
+    "start": "cross-env NODE_ENV=production pm2 start ./start.json",
+    "build": "npm run lint && npm run clean && tsc && npm run copy",
+    "copy": "copyfiles -f ./src/views/* ./build/views",
+    "clean": "rimraf build/*",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "fix": "tslint --fix -c tslint.json ./src/**/*.ts"
@@ -54,6 +55,8 @@
     "@types/mysql": "^2.15.8",
     "@types/node": "^12.12.14",
     "@types/redis": "^2.8.14",
+    "copyfiles": "^2.1.1",
+    "rimraf": "^3.0.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1"
   }
