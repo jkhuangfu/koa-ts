@@ -23,6 +23,7 @@ const baidu = async (ctx: Koa.Context) => {
       url: `https://openapi.baidu.com/rest/2.0/passport/users/getInfo?access_token=${accessToken}`
     });
     response(ctx, 200, result.data);
+    // 获取用户头像 http://tb.himg.baidu.com/sys/portraitn/item/+portrait字段 https协议有安全问题。。。
   } catch (e) {
     LOG4.http.error(`baidu 授权失败，错误信息--->${e}`);
     // ctx.response.redirect(`/error.html`);
