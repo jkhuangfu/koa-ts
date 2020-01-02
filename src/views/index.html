@@ -28,10 +28,15 @@
       </svg>
     </div>
 
+    <a
+      href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=VSB4cdUziZoTQ63ewVAAikCx&redirect_uri=http://127.0.0.1:3000/oauth/baidu"
+      >百度</a
+    >
+
     <script>
       const client_id = '85545506c0a8ba719f36';
       const authorize_uri = 'https://github.com/login/oauth/authorize';
-      const redirect_uri = 'http://localhost:3000/oauth/redirect';
+      const redirect_uri = 'http://127.0.0.1:3000/oauth/github';
       const link = document.getElementById('login');
       link.onclick = () => {
         location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;

@@ -1,11 +1,13 @@
 import * as Koa from 'koa';
 import axios from 'axios';
-import { gitDev, gitProd } from '../../config/github';
+import { dev, prod } from '../../config/auth';
 
 const { NODE_ENV } = process.env;
-const { clientID, clientSecret } = NODE_ENV === 'development' ? gitDev : gitProd;
+const {
+  github: { clientID, clientSecret }
+} = NODE_ENV === 'development' ? dev : prod;
 
-const auth = async (ctx: Koa.Context) => {
+const github = async (ctx: Koa.Context) => {
   const requestCode = ctx.request.query.code;
   LOG4.http.info('github authorization code:', requestCode);
 
@@ -33,7 +35,8 @@ const auth = async (ctx: Koa.Context) => {
       }
     });
     const name = result.data.bio;
-    ctx.response.redirect(`/welcome.html?name=${name}`);
+    response(ctx, 200, result.data);
+    // ctx.response.redirect(`/welcome.html?name=${name}`);
   } catch (e) {
     LOG4.http.error(`github 授权失败，错误信息--->${e}`);
     // ctx.response.redirect(`/error.html`);
@@ -47,4 +50,4 @@ const auth = async (ctx: Koa.Context) => {
   }
 };
 
-export default auth;
+export default github;
