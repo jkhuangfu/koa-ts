@@ -19,7 +19,8 @@
     "mysql",
     "session",
     "mongoose",
-    "mongodb"
+    "mongodb",
+    "jsonwentoken"
   ],
   "author": "jkhuangfu",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "axios": "^0.19.0",
     "chokidar": "^3.3.1",
     "cross-env": "^6.0.3",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
     "koa-helmet": "^5.2.0",
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "@types/adm-zip": "^0.4.32",
+    "@types/jsonwebtoken": "^8.3.5",
     "@types/koa": "^2.11.0",
     "@types/koa-helmet": "^3.1.2",
     "@types/koa-router": "^7.0.42",

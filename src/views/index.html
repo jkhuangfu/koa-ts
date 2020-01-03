@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Node OAuth2 Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://dss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_65682a2.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
@@ -33,6 +33,9 @@
       >百度</a
     >
 
+    <button id="get">获取token</button>
+    <button id="parse">解析token</button>
+
     <script>
       const client_id = '85545506c0a8ba719f36';
       const authorize_uri = 'https://github.com/login/oauth/authorize';
@@ -40,6 +43,27 @@
       const link = document.getElementById('login');
       link.onclick = () => {
         location.href = `${authorize_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}`;
+      };
+      const get = document.getElementById('get');
+      const parse = document.getElementById('parse');
+      let token = null;
+      get.onclick = async () => {
+        const result = await axios({
+          method: 'post',
+          url: `/user/add`
+        });
+        console.log(result.data.result.data);
+        token = result.data.result.data;
+      };
+      parse.onclick = async () => {
+        const result = await axios({
+          method: 'post',
+          url: `/user/delete`,
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
       };
     </script>
   </body>
