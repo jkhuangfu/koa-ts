@@ -13,12 +13,12 @@ import './mongoose';
   await globInit();
   app
     .use(middleware.trace)
+    .use(views(path.join(__dirname, 'views'), { extension: 'html' }))
+    .use(koaStatic(path.join(__dirname, 'public')))
     .use(helmet())
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
     .use(middleware.router)
-    .use(views(path.join(__dirname, 'views'), { extension: 'html' }))
-    .use(koaStatic(path.join(__dirname, 'public')))
     .on('error', err => {
       LOG4.error.error(err);
     })
