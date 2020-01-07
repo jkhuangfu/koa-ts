@@ -1,4 +1,7 @@
 import * as jwt from 'jsonwebtoken';
+interface Token {
+  userId: any;
+}
 
 export default class JWT {
   public static async generate(value: any, secret: string = '^@q676V_8&2', expires: number = 60 * 60) {
@@ -9,7 +12,7 @@ export default class JWT {
       return false;
     }
   }
-  public static async verify(token: string, secret: string = '^@q676V_8&2') {
+  public static async verify(token: string, secret: string = '^@q676V_8&2'): Promise<any> {
     try {
       return jwt.verify(token, secret);
     } catch (e) {

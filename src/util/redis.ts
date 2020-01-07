@@ -59,7 +59,7 @@ export default class RedisDb {
    * @return Promise<Boolean>
    */
 
-  public static exits(key: string) {
+  public static exits(key: string): Promise<boolean | Error> {
     return new Promise(resolve => {
       client.exists(key, (err, reply) => {
         if (err) {

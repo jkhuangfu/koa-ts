@@ -3,6 +3,7 @@ import * as Koa from 'koa';
 const err = async (ctx: Koa.Context, next: Koa.Next) => {
   try {
     const START_TIME = Date.now();
+    ctx.session && (await ctx.session.manuallyCommit());
     await next();
     const END_TIME = Date.now();
     LOG4.http.trace(

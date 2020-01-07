@@ -7,8 +7,10 @@ import * as Koa from 'koa';
 
 const jwtCheck = async (ctx: Koa.Context, next: Koa.Next) => {
   const { authorization } = ctx.header;
-  if ((ctx.method === 'POST' && !authorization) || !(await JWT.verify(authorization.split(' ')[1]))) {
-    ctx.throw(401, 'access_denied');
+  const user = authorization && (await JWT.verify(authorization.split(' ')[1]));
+  const redis = user && (await redisDb.get(`${user.userId}.Token`));
+  if (!authorization || !user || !redis || redis !== user.g_t) {
+    return ctx.throw(401, 'access_denied');
   }
   await next();
 };
