@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
 import jwtCheck from '../middleware/checklogin';
-import { request } from 'http';
+import * as uuid from 'uuid';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/user')
@@ -15,9 +15,10 @@ router
     // ctx.cookies.set('DRNET_UID', userName + Date.now().toString());
     if (userName === 'admin' && pwd === 'abc') {
       const generateTime = Date.now();
-      if (await redisDb.exits(userName + '.Token') ) await redisDb.del(userName + '.Token');
-      await redisDb.set(userName + '.Token', userName + generateTime, 300000);
-      const token = await JWT.generate({ userId: userName, g_t: generateTime });
+      const uid = uuid.v4();
+      if (await redisDb.exits(userName + '.Token')) await redisDb.del(userName + '.Token');
+      await redisDb.set(userName + '.Token', userName + uid, 7 * 24 * 60 * 60 * 1000);
+      const token = await JWT.generate({ userId: userName, g_t: generateTime, u_id: uid });
       response(ctx, 200, {
         data: token
       });
@@ -26,6 +27,7 @@ router
     response(ctx, 300, { data: null }, 'faild');
   })
   .post('/t', async ctx => {
+    console.log(uuid.v4());
     // console.log(111, redisDb.search('admin*'));
   })
   .use(jwtCheck)

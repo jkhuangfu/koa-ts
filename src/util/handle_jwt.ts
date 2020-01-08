@@ -4,7 +4,7 @@ interface Token {
 }
 
 export default class JWT {
-  public static async generate(value: any, secret: string = '^@q676V_8&2', expires: number = 60 * 60) {
+  public static async generate(value: any, secret: string = '^@q676V_8&2', expires = '7 days') {
     try {
       return jwt.sign(value, secret, { expiresIn: expires });
     } catch (e) {

@@ -9,7 +9,7 @@ const jwtCheck = async (ctx: Koa.Context, next: Koa.Next) => {
   const { authorization } = ctx.header;
   const user = authorization && (await JWT.verify(authorization.split(' ')[1]));
   const redis = user && (await redisDb.get(`${user.userId}.Token`));
-  if (!authorization || !user || !redis || redis !== (user.userId + user.g_t)) {
+  if (!authorization || !user || !redis || redis !== user.userId + user.u_id) {
     ctx.throw(401, 'access_denied');
   }
   await next();
