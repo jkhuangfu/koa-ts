@@ -6,13 +6,7 @@ const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/user')
   .post('/login', async (ctx: Koa.Context) => {
-    // Session.set(ctx, 'user', { a: Date.now() });
-    // LOG4.http.info(encryption.hash('111', 'md5'));
-    // @ts-ignore
-    // await ctx.session.manuallyCommit();
-    // console.log(ctx.session);
     const { userName, pwd } = ctx.request.body;
-    // ctx.cookies.set('DRNET_UID', userName + Date.now().toString());
     if (userName === 'admin' && pwd === 'abc') {
       const generateTime = Date.now();
       const uid = uuid.v4();
@@ -26,8 +20,11 @@ router
     }
     response(ctx, 300, { data: null }, 'faild');
   })
-  .post('/t', async ctx => {
+  .get('/t', async ctx => {
     console.log(uuid.v4());
+    ctx.body = {
+      data: ctx.session
+    };
     // console.log(111, redisDb.search('admin*'));
   })
   .use(jwtCheck)
