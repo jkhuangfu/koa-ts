@@ -7,7 +7,7 @@ const mysqlConfig = NODE_ENV === 'development' ? mysqlDev : mysqlOnline;
 const pool = mysql.createPool(Object.assign({ multipleStatements: true }, mysqlConfig));
 
 export default class DB {
-  public static handle(sql: string, query: any[]) {
+  public static handle(sql: string, query: any[]): any {
     return new Promise(resolve => {
       pool.getConnection((err, connection) => {
         if (err) {
