@@ -18,6 +18,7 @@ import './mongoose';
     .use(helmet())
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
+    .use(middleware.koaCors)
     .use(middleware.router)
     .on('error', err => {
       LOG4.error.error(err);

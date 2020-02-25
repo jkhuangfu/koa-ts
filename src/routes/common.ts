@@ -11,7 +11,6 @@ router.prefix('/common').get('/captcha', (ctx: Koa.Context) => {
   });
   LOG4.http.info('======获取验证码=====' + creatCaptcha.text);
   Session.set(ctx, 'img', creatCaptcha.text, 1 * 60 * 1000); // 存储验证码到session 有效期1分钟
-
   ctx.response.type = 'svg';
   ctx.response.body = creatCaptcha.data;
 });
