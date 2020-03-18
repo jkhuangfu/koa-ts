@@ -42,7 +42,7 @@ const createReplyXml = (content: any, fromUsername: string, toUsername: string) 
     }
   }
   info.msgType = type;
-  info.createTime = new Date().getTime();
+  info.createTime = Date.now();
   info.toUsername = toUsername;
   info.fromUsername = fromUsername;
   return ejs.compile(wx_xml_template)(info);

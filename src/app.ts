@@ -13,7 +13,7 @@ import './mongoose';
   await globInit();
   app
     .use(middleware.trace)
-    .use(views(path.join(__dirname, 'views'), { extension: 'html' }))
+    .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
     .use(koaStatic(path.join(__dirname, 'public')))
     .use(helmet())
     .use(middleware.koaBody)

@@ -9,9 +9,9 @@ router
     // ctx.session && (ctx.session.user = { name: 1 });
     await ctx.render('index');
   })
-  .get('/add', async (ctx: Koa.Context) => {
-    await ctx.render('index');
-  })
+  // .get('/authpage/:id', async (ctx: Koa.Context) => {
+  //   await ctx.render('auth', { id: ctx.params.id });
+  // })
   .get('/delete', (ctx: Koa.Context) => {
     ctx.body = 'this is user delete page' + JSON.stringify(ctx.session && ctx.session.user);
   })
