@@ -9,7 +9,7 @@ interface UserController {
 const userController: UserController = {
   Login: async (ctx: Koa.Context) => {
     const { userName, pwd, token } = ctx.request.body;
-    const sql = `select wx_id,pass_word from tb_user where user_name = '${userName}'`;
+    const sql = `select id,wx_id,pass_word from tb_user where user_name = '${userName}'`;
     if (!userName || !pwd || !token) {
       return response(ctx, 201, { data: null }, '缺少参数');
     }
@@ -17,7 +17,7 @@ const userController: UserController = {
     if (result.code === 500) {
       return response(ctx, 500, { data: null }, '信息查询失败');
     }
-    const { wx_id, pass_word } = result.result[0];
+    const { wx_id, pass_word, id } = result.result[0];
 
     if (!wx_id) {
       return response(ctx, 203, { data: null }, '账号信息错误');
@@ -32,9 +32,9 @@ const userController: UserController = {
 
     const generateTime = Date.now();
     const uid = uuid.v4();
-    if (await redisDb.exits(userName + '.Token')) await redisDb.del(userName + '.Token');
-    await redisDb.set(userName + '.Token', userName + uid, 7 * 24 * 60 * 60 * 1000);
-    const jToken = await JWT.generate({ userId: userName, g_t: generateTime, u_id: uid });
+    if (await redisDb.exits(id + '.jwt_token')) await redisDb.del(id + '.jwt_token');
+    await redisDb.set(id + '.jwt_token', uid, 7 * 24 * 60 * 60 * 1000);
+    const jToken = await JWT.generate({ userId: id, g_t: generateTime, u_id: uid });
     return response(ctx, 200, { data: jToken }, '登录成功');
   },
   Register: async (ctx: Koa.Context) => {
@@ -65,8 +65,8 @@ const userController: UserController = {
       return;
     }
     const generateTime = Date.now();
-    await redisDb.set(nickName + '.Token', nickName, 7 * 24 * 60 * 60 * 1000);
-    const token = await JWT.generate({ userId: nickName, g_t: generateTime });
+    await redisDb.set(insertResult.result.insertId + '.jwt_token', nickName, 7 * 24 * 60 * 60 * 1000);
+    const token = await JWT.generate({ userId: insertResult.result.insertId, g_t: generateTime, u_id: uuid.v4() });
     response(ctx, 200, { data: { Token: token } }, '注册成功');
   }
 };

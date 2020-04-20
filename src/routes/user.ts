@@ -1,6 +1,5 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import jwtCheck from '../middleware/checklogin';
 import userController from '../controllers/user';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
@@ -10,7 +9,6 @@ router
   })
   .post('/register', async (ctx: Koa.Context) => {
     await userController.Register(ctx);
-  })
-  .use(jwtCheck);
+  });
 
 export default router.routes();

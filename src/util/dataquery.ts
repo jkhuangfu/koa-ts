@@ -5,10 +5,9 @@ const { NODE_ENV } = process.env;
 const mysqlConfig = NODE_ENV === 'development' ? mysqlDev : mysqlOnline;
 /* 使用连接池,开启多sql查询 */
 const pool = mysql.createPool(Object.assign({ multipleStatements: true }, mysqlConfig));
-
 export default class DB {
   public static handle(sql: string, query: any[]): any {
-    return new Promise(resolve => {
+    return new Promise((resolve: (value?: any) => any) => {
       pool.getConnection((err, connection) => {
         if (err) {
           resolve({ code: 500, msg: err });
