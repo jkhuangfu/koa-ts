@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 interface UserController {
   Login: (ctx: Koa.Context) => Promise<any>;
   Register: (ctx: Koa.Context) => Promise<any>;
+  TV: (ctx: Koa.Context) => Promise<any>;
 }
 
 const userController: UserController = {
@@ -68,6 +69,34 @@ const userController: UserController = {
     await redisDb.set(insertResult.result.insertId + '.jwt_token', nickName, 7 * 24 * 60 * 60 * 1000);
     const token = await JWT.generate({ userId: insertResult.result.insertId, g_t: generateTime, u_id: uuid.v4() });
     response(ctx, 200, { data: { Token: token } }, '注册成功');
+  },
+  TV: async (ctx: Koa.Context) => {
+    const { user, pwd, token } = ctx.request.body;
+    const sql = `select id,wx_id,pass_word from tb_tv_user where user_name = '${user}'`;
+    if (!user || !pwd || !token) {
+      return response(ctx, 201, { data: null }, '缺少参数');
+    }
+    const result: any = await DB.handle(sql, []);
+    if (result.code === 500) {
+      return response(ctx, 500, { data: null }, '信息查询失败');
+    }
+    const { wx_id, pass_word } = result.result[0];
+
+    if (!wx_id) {
+      return response(ctx, 203, { data: null }, '账号信息错误');
+    }
+    if (pass_word !== pwd) {
+      return response(ctx, 204, { data: null }, '账号信息错误');
+    }
+    const tokenCode = await redisDb.get(wx_id + '_code');
+    if (token !== tokenCode) {
+      return response(ctx, 202, { data: null }, '令牌验证错误');
+    }
+
+    const generateTime = Date.now();
+    const uid = uuid.v4();
+    const jToken = await JWT.generate({ g_t: generateTime, u_id: uid });
+    return response(ctx, 200, { data: jToken }, '登录成功');
   }
 };
 

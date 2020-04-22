@@ -5,7 +5,7 @@ import * as koaStatic from 'koa-static';
 import * as helmet from 'koa-helmet';
 import { globInit } from './util';
 import middleware from './middleware';
-import './mongoose';
+// import './mongoose';
 
 (async () => {
   const app = new Koa();
@@ -20,7 +20,7 @@ import './mongoose';
     .use(middleware.koaSession(app))
     .use(middleware.koaCors)
     .use(middleware.router)
-    .on('error', err => {
+    .on('error', (err: any) => {
       LOG4.error.error(err);
     })
     .listen(3000, () => {
