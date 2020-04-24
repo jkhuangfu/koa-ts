@@ -2,7 +2,6 @@ import * as captcha from 'svg-captcha';
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
 import sendCode from '../controllers/mail';
-import { getTvList, spiderData } from '../controllers/tv';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/common')
@@ -17,24 +16,26 @@ router
     ctx.response.type = 'svg';
     ctx.response.body = creatCaptcha.data;
   })
+  // .get('/rr', async (ctx: Koa.Context) => {
+  //   const data = await fs.readFileSync('/Users/huangfu/Desktop/t.txt');
+  //   const arr = data.toString().split('\n');
+  //   const res: any = [];
+  //   let insert: string = 'INSERT INTO  tb_tv (tv_name,tv_url,is_hd,role) values ';
+
+  //   arr.map((item: any, index: number) => {
+  //     res.push({
+  //       name: item.split(',')[0],
+  //       url: item.split(',')[1],
+  //       type: 3
+  //     });
+  //     insert += `('${item.split(',')[0]}','${item.split(',')[1]}','2','1')${index < arr.length - 1 ? ',' : ''}`;
+  //   });
+  //   const d = await DB.handle(insert, []);
+  //   response(ctx, 200, { data: null }, '1');
+  // })
   .post('/mail', async (ctx: Koa.Context) => {
     const { code, data, msg } = (await sendCode(ctx)) as any;
     response(ctx, code, { data }, msg);
-  })
-  .get('/tv', async (ctx: Koa.Context) => {
-    const data = await spiderData();
-    const clear = 'truncate table tb_tv';
-    let insert: string = 'INSERT INTO  tb_tv (tv_name,tv_url,is_hd) values ';
-    data.map((item: any, index: number) => {
-      const { name, url, type } = item;
-      insert += `('${name}','${url}','${type}')${index < data.length - 1 ? ',' : ''}`;
-    });
-    await DB.handle(clear, []);
-    await DB.handle(insert, []);
-    response(ctx, 200, { data }, '1');
-  })
-  .post('/getTvList', async (ctx: Koa.Context) => {
-    await getTvList(ctx);
   });
 
 export default router.routes();

@@ -4,7 +4,7 @@ const router = new Router<Koa.DefaultContext, Koa.Context>();
 
 router
   .prefix('')
-  .get('/i', async (ctx: Koa.Context) => {
+  .get('/', async (ctx: Koa.Context) => {
     // ctx.session.user =
     // ctx.session && (ctx.session.user = { name: 1 });
     await ctx.render('index');

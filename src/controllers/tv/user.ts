@@ -11,8 +11,8 @@ const tvUser = {
     if (result.code === 500) {
       return response(ctx, 500, { data: null }, '信息查询失败');
     }
-    const { wx_id, pwd } = result.result[0];
 
+    const { wx_id, pwd } = result.result[0];
     if (!wx_id || pwd !== password) {
       return response(ctx, 203, { data: null }, '账号信息错误');
     }
@@ -25,14 +25,11 @@ const tvUser = {
     const generateTime = Date.now();
     const uid = uuid.v4();
     const jToken: any = await JWT.generate({ g_t: generateTime, u_id: uid });
-    const t =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnX3QiOjE1ODc1NTIxMDg2ODUsInVfaWQiOiJlYmU0Yjk5Zi01MGY5LTQ0NDEtYjk4Yy03M2M1MGU0MTA4MTQiLCJpYXQiOjE1ODc1NTIxMDgsImV4cCI6MTU4ODE1NjkwOH0.LRvxfSvlDi2O9T6unGRHq0maH7-sf5EyK48UA8L5A2c';
-    console.log(await JWT.verify(t));
     return response(ctx, 200, { data: jToken }, '登录成功');
   },
   checkLogin: async (ctx: Koa.Context) => {
     const { authorization } = ctx.header;
-    const user = authorization && (await JWT.verify(authorization.split(' ')[1]));
+    const user = authorization && (await JWT.verify(authorization.replace(/\"/g, '')));
     if (authorization && user) {
       return response(ctx, 200, { data: null }, '登录成功');
     } else {

@@ -1,7 +1,4 @@
 import * as jwt from 'jsonwebtoken';
-interface Token {
-  userId: any;
-}
 
 export default class JWT {
   public static async generate(value: any, secret: string = '^@q676V_8&2', expires = '7 days') {

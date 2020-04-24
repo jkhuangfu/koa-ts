@@ -7,7 +7,6 @@
     "watch_delay": 1000,
     "ignore_watch": ["build/upload"],
     "log_date_format": "YYYY-MM-DD HH:mm Z",
-    "instance_var": "INSTANCE_ID",
-    "exec_mode": "cluster"
+    "instance_var": "INSTANCE_ID"
   }
 }

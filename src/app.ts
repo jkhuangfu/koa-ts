@@ -23,7 +23,7 @@ import middleware from './middleware';
     .on('error', (err: any) => {
       LOG4.error.error(err);
     })
-    .listen(3000, () => {
-      LOG4.app.info('server is running at port 3000');
+    .listen(3330, () => {
+      LOG4.app.info('server is running at port 3330');
     });
 })();

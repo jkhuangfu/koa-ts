@@ -4,6 +4,9 @@ import * as Tv from '../controllers/tv';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/tv')
+  .get('/spider', async (ctx: Koa.Context) => {
+    await Tv.spiderData(ctx);
+  })
   .post('/login', async (ctx: Koa.Context) => {
     await Tv.tvUser.login(ctx);
   })

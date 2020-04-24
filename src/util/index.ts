@@ -1,12 +1,13 @@
-import hash from './crypto';
-import data_query from './dataquery';
-import log4 from './log4js';
+import encryption from './crypto';
+import DB from './dataquery';
+import LOG4 from './log4js';
 import redisDb from './redis';
 import response from './response';
 import Session from './session';
 import JWT from './handle_jwt';
+import $http from './http';
 const globInit = async () => {
   // global挂载全局方法
-  Object.assign(global, { encryption: hash, DB: data_query, LOG4: log4, redisDb, response, Session, JWT });
+  Object.assign(global, { encryption, DB, LOG4, redisDb, response, Session, JWT, $http });
 };
-export { hash, data_query, log4, globInit, redisDb, response, Session, JWT };
+export { encryption, DB, LOG4, globInit, redisDb, response, Session, JWT, $http };

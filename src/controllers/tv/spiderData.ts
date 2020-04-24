@@ -1,10 +1,11 @@
-import * as http from 'http';
 import * as cheerio from 'cheerio';
-import Axios from 'axios';
+import * as Koa from 'koa';
 
-const getData = async () => {
-  const html: any = await Axios.get('http://ivi.bupt.edu.cn/');
+const spiderData = async (ctx: Koa.Context) => {
+  const html: any = await $http.get('http://ivi.bupt.edu.cn/');
   const $ = cheerio.load(html);
+  const clear = 'truncate table tb_tv';
+  let insert: string = 'INSERT INTO  tb_tv (tv_name,tv_url,is_hd,role) values ';
   const result: Array<{ name: any; url: string | undefined; type: number }> = [];
   $('.2u').each((i: number) => {
     const tvName: any = $('.2u').eq(i).find('p').eq(0).html();
@@ -17,7 +18,14 @@ const getData = async () => {
     });
   });
 
-  return result;
+  result.map((item: any, index: number) => {
+    const { name, url, type } = item;
+    insert += `('${name}','${url}','${type}',1)${index < result.length - 1 ? ',' : ''}`;
+  });
+  await DB.handle(clear, []);
+  await DB.handle(insert, []);
+
+  response(ctx, 200, { data: result });
 };
 
-export default getData;
+export default spiderData;
