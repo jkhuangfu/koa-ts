@@ -16,10 +16,10 @@ const randomCode = (): string => {
 };
 
 const sendCode = async (ctx: Koa.Context) => {
-  const { email } = ctx.request.body;
+  const { email } = getParmas(ctx);
   if (!email) return response(ctx, 201, { data: null }, '接收邮箱为空');
   const code = randomCode();
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     mailTransport.sendMail(
       {
         from: `Dr丶net<${mailConfig.auth.user}>`,
@@ -32,7 +32,7 @@ const sendCode = async (ctx: Koa.Context) => {
                 <span style="color:#666;">5分钟内有效</span>
             `
       },
-      async err => {
+      async (err) => {
         if (err) {
           LOG4.http.error('Unable to send email: ' + err);
           resolve({ code: 400, data: null, msg: '发送失败' });

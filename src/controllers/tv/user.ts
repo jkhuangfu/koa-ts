@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as uuid from 'uuid';
 const tvUser = {
   login: async (ctx: Koa.Context) => {
-    const { user, pwd: password, token } = ctx.request.body;
+    const { user, pwd: password, token } = getParmas(ctx);
     const sql = `select id,wx_id, pwd from tb_tv_user where user = '${user}'`;
     if (!user || !password || !token) {
       return response(ctx, 201, { data: null }, '缺少参数');

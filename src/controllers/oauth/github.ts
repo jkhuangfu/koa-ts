@@ -8,7 +8,7 @@ const {
 } = NODE_ENV === 'development' ? dev : prod;
 
 const github = async (ctx: Koa.Context) => {
-  const requestCode = ctx.request.query.code;
+  const { code: requestCode } = getParmas(ctx); // ctx.request.query.code;
   LOG4.http.info('github authorization code:', requestCode);
 
   try {
