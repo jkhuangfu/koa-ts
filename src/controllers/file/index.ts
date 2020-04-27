@@ -25,7 +25,7 @@ class FileController {
     });
     reader.map((item, idx) => {
       promise.push(
-        new Promise((resolve) => {
+        new Promise((resolve: (value?: boolean | PromiseLike<boolean> | undefined) => void) => {
           item.pipe(upStream[idx]);
           item.on('end', () => {
             resolve(true);
@@ -41,7 +41,7 @@ class FileController {
     return false;
   }
   public SingleFile(ctx: Koa.Context) {
-    return new Promise((resolve) => {
+    return new Promise((resolve: (value?: boolean | PromiseLike<boolean> | undefined) => void) => {
       const { file } = ctx.request.files as any;
       // 创建可读流
       const reader = fs.createReadStream(file.path);
