@@ -6,7 +6,7 @@ const spiderData = async (ctx: Koa.Context) => {
   const $ = cheerio.load(html);
   const clear = 'truncate table tb_tv';
   let insert: string = 'INSERT INTO  tb_tv (tv_name,tv_url,is_hd,role) values ';
-  const result: Array<{ name: any; url: string | undefined; type: number }> = [];
+  const result: { name: any; url: string | undefined; type: number }[] = [];
   $('.2u').each((i: number) => {
     const tvName: any = $('.2u').eq(i).find('p').eq(0).html();
     const unName: any = unescape(tvName.replace(/&#x/g, '%u').replace(/;/g, ''));

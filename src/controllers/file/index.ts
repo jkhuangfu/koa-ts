@@ -16,8 +16,7 @@ class FileController {
     const { file } = ctx.request.files as any;
     const reader: fs.ReadStream[] = [];
     const upStream: fs.WriteStream[] = [];
-    const result: boolean[] = [];
-    const promise: Array<Promise<boolean>> = [];
+    const promise: Promise<boolean>[] = [];
     file.map((item: FileObj) => {
       const filePath = UPLOAD_PATH + item.name;
       reader.push(fs.createReadStream(item.path));
