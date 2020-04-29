@@ -5,13 +5,14 @@ const err = async (ctx: Koa.Context, next: Koa.Next) => {
     const START_TIME = Date.now();
     await next();
     const END_TIME = Date.now();
+    const { method, path, status } = ctx;
+    const params = JSON.stringify(getParmas(ctx));
+    const useTime = END_TIME - START_TIME;
     LOG4.http.trace(
-      `请求连接--->${ctx.path},状态码--->${ctx.status},参数--->${JSON.stringify(getParmas(ctx))} ,耗时---> ${
-        END_TIME - START_TIME
-      } MS`
+      `请求方式-->${method},请求连接-->${path},返回状态码-->${status},传递参数-->${params} ,耗时--> ${useTime} MS`
     );
     if (ctx.status === 404) {
-      return (ctx.body = { url: `${ctx.path}`, status: 404, msg: '接口不存在', timestamp: Date.now() });
+      return (ctx.body = { url: `${path}`, status: 404, msg: '接口不存在', timestamp: Date.now() });
     }
   } catch (err) {
     ctx.response.status = err.statusCode || err.status || 500;
