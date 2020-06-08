@@ -1,5 +1,6 @@
 import * as captcha from 'svg-captcha';
 import * as Router from 'koa-router';
+import * as fs from 'fs';
 import * as Koa from 'koa';
 import sendCode from '../controllers/mail';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
@@ -36,6 +37,36 @@ router
   .post('/mail', async (ctx: Koa.Context) => {
     const { code, data, msg } = (await sendCode(ctx)) as any;
     response(ctx, code, { data }, msg);
+  })
+  .get('/video', async (ctx: Koa.Context) => {
+    const path = '/Users/huangfu/Downloads/dagangwangwei.mp4';
+    const range: string | null = ctx.req.headers.range || null;
+    const stat = fs.statSync(path);
+    const fileSize = stat.size;
+    if (range) {
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      let end = parts[1] ? parseInt(parts[1], 10) : start + 9999999999;
+      // end 在最后取值为 fileSize - 1
+      end = end > fileSize - 1 ? fileSize - 1 : end;
+      const chunksize = end - start + 1;
+      const file = fs.createReadStream(path, { start, end });
+      const head = {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': 'video/mp4'
+      };
+      ctx.res.writeHead(206, head);
+      ctx.body = file;
+    } else {
+      const head = {
+        'Content-Length': fileSize,
+        'Content-Type': 'video/mp4'
+      };
+      ctx.res.writeHead(200, head);
+      ctx.body = fs.createReadStream(path);
+    }
   });
 
 export default router.routes();
