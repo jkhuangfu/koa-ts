@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 // 处理错误信息,发送错误码,记录请求耗时
-const err = async (ctx: Koa.Context, next: Koa.Next) => {
+export default async (ctx: Koa.Context, next: Koa.Next) => {
   try {
     const START_TIME = Date.now();
     await next();
@@ -25,4 +25,3 @@ const err = async (ctx: Koa.Context, next: Koa.Next) => {
     ctx.app.emit('error', err, ctx);
   }
 };
-export default err;

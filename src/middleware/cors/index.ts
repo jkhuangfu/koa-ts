@@ -14,6 +14,4 @@ const corsOptions = {
   credentials: true
 };
 
-const koaCors = cors(corsOptions);
-
-export default koaCors;
+export default cors(corsOptions);

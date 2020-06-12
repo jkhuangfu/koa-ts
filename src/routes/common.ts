@@ -17,6 +17,26 @@ router
     ctx.response.type = 'svg';
     ctx.response.body = creatCaptcha.data;
   })
+  .get('/test', async (ctx: Koa.Context) => {
+    ctx.cookies.set('test', Date.now().toString(), {
+      domain: ctx.request.header.origin, // 写cookie所在的域名
+      // path: '/index', // 写cookie所在的路径
+      maxAge: 1 * 10 * 1000, // cookie有效时长
+      // expires: new Date('2027-02-15'), // cookie失效时间
+      // sameSite: 'none',
+      // Secure: '',
+      signed: true,
+      httpOnly: true // 是否只用于http请求中获取
+      // overwrite: true // 是否允许重写
+    });
+
+    ctx.body = '111';
+  })
+
+  .get('/test1', async (ctx: Koa.Context) => {
+    console.log(ctx.cookies.get('test', { signed: true }));
+    ctx.body = '111';
+  })
   // .get('/rr', async (ctx: Koa.Context) => {
   //   const data = await fs.readFileSync('/Users/huangfu/Desktop/t.txt');
   //   const arr = data.toString().split('\n');
@@ -46,7 +66,7 @@ router
     if (range) {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
-      let end = parts[1] ? parseInt(parts[1], 10) : start + 9999999999;
+      let end = parts[1] ? parseInt(parts[1], 10) : start + 1024 * 1000;
       // end 在最后取值为 fileSize - 1
       end = end > fileSize - 1 ? fileSize - 1 : end;
       const chunksize = end - start + 1;

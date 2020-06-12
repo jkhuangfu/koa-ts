@@ -4,7 +4,7 @@ const UPLOAD_PATH: string = path.join(
   process.cwd(),
   process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/'
 );
-const bodyParse = KoaBody({
+export default KoaBody({
   multipart: true, // 支持文件上传
   formidable: {
     // uploadDir: UPLOAD_PATH, // 上传目录，如果设置了此项则路由不可控相关处理，
@@ -16,4 +16,3 @@ const bodyParse = KoaBody({
     // }
   }
 });
-export default bodyParse;

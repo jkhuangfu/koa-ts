@@ -10,8 +10,6 @@ const sessionConfig = {
   signed: true
 };
 
-const koaSession = (app: Koa) => {
+export default (app: Koa) => {
   return session(sessionConfig, app);
 };
-
-export default koaSession;
