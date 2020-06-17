@@ -7,7 +7,7 @@ const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/common')
   .get('/captcha', (ctx: Koa.Context) => {
-    const creatCaptcha: captcha.CaptchaObj = captcha.createMathExpr({
+    const creatCaptcha = captcha.createMathExpr({
       noise: 4,
       color: true,
       background: 'rgba(0,0,0,0)' // 透明色背景
