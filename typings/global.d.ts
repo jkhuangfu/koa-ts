@@ -1,4 +1,4 @@
-import { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParmas } from '../src/util';
+import { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParams } from '../src/util';
 
 type HASH_TYPE = typeof encryption;
 type DATA_QUERY = typeof DB;
@@ -8,7 +8,7 @@ type RES_TYPE = typeof response;
 type SESSION = typeof Session;
 type JWT_TYPE = typeof JWT;
 type HTTP = typeof $http;
-type GET_PARAMS = typeof getParmas;
+type GET_PARAMS = typeof getParams;
 
 declare global {
   const encryption: HASH_TYPE;
@@ -19,5 +19,5 @@ declare global {
   const Session: SESSION;
   const JWT: JWT_TYPE;
   const $http: HTTP;
-  const getParmas: GET_PARAMS;
+  const getParams: GET_PARAMS;
 }

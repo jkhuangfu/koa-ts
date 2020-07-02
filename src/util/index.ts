@@ -6,9 +6,9 @@ import response from './response';
 import Session from './session';
 import JWT from './handle_jwt';
 import $http from './http';
-import getParmas from './getParams';
+import getParams from './getParams';
 const globInit = async () => {
   // global挂载全局方法
-  Object.assign(global, { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParmas });
+  Object.assign(global, { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParams });
 };
-export { encryption, DB, LOG4, globInit, redisDb, response, Session, JWT, $http, getParmas };
+export { encryption, DB, LOG4, globInit, redisDb, response, Session, JWT, $http, getParams };

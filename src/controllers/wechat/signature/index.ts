@@ -7,7 +7,7 @@ const { APP_ID, APP_SECRET } = wechatConfig;
 
 export default async (ctx: Koa.Context) => {
   try {
-    const { url } = getParmas(ctx);
+    const { url } = getParams(ctx);
     const NONCT_STR = 'W6@jsgfh!qeJ';
     const timestamp = Math.floor(Date.now() / 1000); // 时间戳
     const CACHE_TOKEN = cache.get('access_token');

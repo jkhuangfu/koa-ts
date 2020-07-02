@@ -16,7 +16,7 @@ const randomCode = (): string => {
 };
 
 const sendCode = async (ctx: Koa.Context) => {
-  const { email } = getParmas(ctx);
+  const { email } = getParams(ctx);
   if (!email) return response(ctx, 201, { data: null }, '接收邮箱为空');
   const code = randomCode();
   return new Promise((resolve: (value?: any) => void) => {

@@ -9,7 +9,7 @@ interface UserController {
 
 const userController: UserController = {
   Login: async (ctx: Koa.Context) => {
-    const { userName, pwd, token } = getParmas(ctx);
+    const { userName, pwd, token } = getParams(ctx);
     const sql = `select id,wx_id,pass_word from tb_user where user_name = '${userName}'`;
     if (!userName || !pwd || !token) {
       return response(ctx, 201, { data: null }, '缺少参数');
@@ -40,7 +40,7 @@ const userController: UserController = {
   },
   Register: async (ctx: Koa.Context) => {
     const captach = Session.get(ctx, 'img');
-    const { nickName, passWord, img } = getParmas(ctx);
+    const { nickName, passWord, img } = getParams(ctx);
     if (!nickName || !passWord || !img) {
       response(ctx, 400, { data: null }, '缺少参数');
       return;
@@ -71,7 +71,7 @@ const userController: UserController = {
     response(ctx, 200, { data: { Token: token } }, '注册成功');
   },
   TV: async (ctx: Koa.Context) => {
-    const { user, pwd, token } = getParmas(ctx);
+    const { user, pwd, token } = getParams(ctx);
     const sql = `select id,wx_id,pass_word from tb_tv_user where user_name = '${user}'`;
     if (!user || !pwd || !token) {
       return response(ctx, 201, { data: null }, '缺少参数');

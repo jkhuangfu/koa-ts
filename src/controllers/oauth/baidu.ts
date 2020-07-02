@@ -8,7 +8,7 @@ const {
 } = NODE_ENV === 'development' ? dev : prod;
 
 const baidu = async (ctx: Koa.Context) => {
-  const { code: requestCode } = getParmas(ctx); // ctx.request.query.code;
+  const { code: requestCode } = getParams(ctx); // ctx.request.query.code;
   LOG4.http.info('baidu authorization code:', requestCode);
   try {
     const tokenResponse = await axios({
