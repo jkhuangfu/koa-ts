@@ -3,9 +3,10 @@ import { configDev, configProd } from '../config/redis';
 
 const { NODE_ENV } = process.env;
 const { ip, port } = NODE_ENV === 'development' ? configDev : configProd;
-const client = redis.createClient(port, ip);
-client.on('error', err => {
+const client: redis.RedisClient = redis.createClient(port, ip);
+client.on('error', (err: Error) => {
   LOG4.app.error('redis error：' + err);
+  process.exit(1);
 });
 client.on('connect', () => {
   LOG4.app.info('redis连接成功...');
@@ -20,7 +21,7 @@ export default class RedisDb {
    * @return 200
    */
   public static set(key: string, value: any, expire?: number) {
-    return new Promise(resolve => {
+    return new Promise((resolve: (value: number | Error) => void) => {
       client.set(key, value, (err, result) => {
         if (err) {
           LOG4.http.error('redis插入失败：' + err);
@@ -41,7 +42,7 @@ export default class RedisDb {
    * @return Promise<Any>
    */
   public static get(key: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve: (value: string | Error) => void) => {
       client.get(key, (err, result) => {
         if (err) {
           LOG4.http.error('redis获取失败：' + err);
@@ -60,7 +61,7 @@ export default class RedisDb {
    */
 
   public static exits(key: string): Promise<boolean | Error> {
-    return new Promise(resolve => {
+    return new Promise((resolve: (value: boolean | Error) => void) => {
       client.exists(key, (err, reply) => {
         if (err) {
           resolve(err);
@@ -82,7 +83,7 @@ export default class RedisDb {
    */
 
   public static del(keys: string | string[]) {
-    return new Promise(resolve => {
+    return new Promise((resolve: (value: boolean) => void) => {
       client.del(keys, (err, val) => {
         if (err) {
           resolve(false);
