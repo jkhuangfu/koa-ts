@@ -4,6 +4,6 @@ export default {
   secureConnection: true,
   auth: {
     user: 'no-replay@drnet.xyz',
-    pass: 'huangfu@1993'
+    pass: '*****'
   }
 };
