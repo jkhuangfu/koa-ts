@@ -12,6 +12,12 @@ interface DBRESULT {
   result?: any;
 }
 export default class DB {
+  /**
+   * @description 数据库操作方法
+   * @param {string} sql sql操作语句
+   * @param {any[]} query sql查询值
+   * @returns {*} Promise<{code:number,msg?:Error,result:any}>
+   */
   public static handle(sql: string, query: any[]): any {
     return new Promise((resolve: (value: DBRESULT) => void) => {
       pool.getConnection((err: mysql.MysqlError, connection: mysql.PoolConnection) => {

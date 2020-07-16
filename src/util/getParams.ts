@@ -1,4 +1,9 @@
 import * as Koa from 'koa';
+/**
+ * @description 获取前端传递参数
+ * @param {Koa.Context} ctx
+ * @return 前端传递的参数默认为{}
+ */
 export default (ctx: Koa.Context) => {
   const { method } = ctx;
   const typeQuery = ctx.query && Object.keys(ctx.query).length;

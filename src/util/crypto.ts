@@ -1,5 +1,4 @@
 import * as crypto from 'crypto';
-import { stringify } from 'querystring';
 
 export default class Encryption {
   /**
