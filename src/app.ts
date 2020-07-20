@@ -20,7 +20,7 @@ import middleware from './middleware';
     .use(middleware.koaSession(app))
     .use(middleware.koaCors)
     .use(middleware.router)
-    .on('error', (err: any) => {
+    .on('error', (err: Error) => {
       LOG4.error.error(err);
     })
     .listen(3330, () => {
