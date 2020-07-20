@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>测试demo</title>
+    <!--socket.io-->
+    <script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.js"></script>
+  </head>
+  <body>
+    <h1 style="text-align: center;"><%= title %></h1>
+    <hr />
+    <button onclick="a()">点击测试</button>
+    <ul id="ultext"></ul>
+  </body>
+  <script type="text/javascript">
+    const id = location.search;
+    var socket = io.connect('ws://localhost:3330?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
+    function a() {
+      /**
+       * emit 向服务端发送信息
+       * post 为服务端自定义的事件名称
+       * 123456 为传递的内容
+       * */
+      socket.emit('post', '123456');
+    }
+    /**
+     * 监听服务器返回的数据
+     * send 为服务端自定义的事件名称
+     * 回调函数处理得到的额服务信息
+     * */
+    socket.on('send', function (data) {
+      console.log(data);
+      var htmldatas = data;
+      var html = '';
+      for (var i = 0; i < htmldatas.length; i++) {
+        var htmldata = htmldatas[i];
+        html += '<li>' + htmldata + '</li>';
+      }
+      document.getElementById('ultext').innerHTML = html;
+    });
+    socket.on('add', function (data) {
+      console.log(data);
+    });
+  </script>
+</html>

@@ -1,16 +1,20 @@
 import * as Koa from 'koa';
+import * as http from 'http';
 import * as path from 'path';
 import * as views from 'koa-views';
 import * as koaStatic from 'koa-static';
 import * as helmet from 'koa-helmet';
 import { globInit } from './util';
 import middleware from './middleware';
+import io from './controllers/socket/index';
 // import './mongoose';
 
 (async () => {
   const app = new Koa();
+  const server = http.createServer(app.callback());
   app.keys = ['W@7712duagdb6hddhgW!'];
   await globInit();
+  io(server);
   app
     .use(middleware.trace)
     .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
@@ -22,8 +26,8 @@ import middleware from './middleware';
     .use(middleware.router)
     .on('error', (err: Error) => {
       LOG4.error.error(err);
-    })
-    .listen(3330, () => {
-      LOG4.app.info('server is running at port 3330');
     });
+  server.listen(3330, () => {
+    LOG4.app.info('server is running at port 3330');
+  });
 })();
