@@ -42,7 +42,7 @@ export default class RedisDb {
    * @return Promise<Any>
    */
   public static get(key: string) {
-    return new Promise((resolve: (value: string | Error) => void) => {
+    return new Promise((resolve: (value: string | Error | null) => void) => {
       client.get(key, (err, result) => {
         if (err) {
           LOG4.http.error('redis获取失败：' + err);
