@@ -7,8 +7,9 @@ import Session from './session';
 import JWT from './handle_jwt';
 import $http from './http';
 import getParams from './getParams';
-const globInit = async () => {
+const globInit = () => {
   // global挂载全局方法
   Object.assign(global, { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParams });
+  return Promise.resolve();
 };
 export { encryption, DB, LOG4, globInit, redisDb, response, Session, JWT, $http, getParams };

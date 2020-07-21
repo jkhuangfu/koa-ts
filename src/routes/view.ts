@@ -9,6 +9,9 @@ router
     // ctx.session && (ctx.session.user = { name: 1 });
     await ctx.render('index');
   })
+  .get('/io', async (ctx: Koa.Context) => {
+    await ctx.render('socket', { title: 'scoket demo' });
+  })
   // .get('/authpage/:id', async (ctx: Koa.Context) => {
   //   await ctx.render('auth', { id: ctx.params.id });
   // })

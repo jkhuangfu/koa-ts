@@ -7,7 +7,7 @@ http.interceptors.response.use(
     return response.data;
   },
   (error: any) => {
-    console.log('TCL: error', error);
+    LOG4.http.error('TCL: error', error);
     return Promise.reject(error);
   }
 );
