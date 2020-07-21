@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 import axios from 'axios';
-import { dev, prod } from '../../config/auth';
+import { dev, prod } from '@/config/auth';
 
 const { NODE_ENV } = process.env;
 const {

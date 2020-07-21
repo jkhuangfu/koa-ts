@@ -1,12 +1,13 @@
 import * as Koa from 'koa';
+import 'module-alias/register';
 import * as http from 'http';
 import * as path from 'path';
 import * as views from 'koa-views';
 import * as koaStatic from 'koa-static';
 import * as helmet from 'koa-helmet';
-import { globInit } from './util';
-import middleware from './middleware';
-import io from './controllers/socket/index';
+import { globInit } from '@/util';
+import middleware from '@/middleware';
+import io from '@/controllers/socket';
 // import './mongoose';
 
 (async () => {

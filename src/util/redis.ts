@@ -1,5 +1,5 @@
 import * as redis from 'redis';
-import { configDev, configProd } from '../config/redis';
+import { configDev, configProd } from '@/config/redis';
 
 const { NODE_ENV } = process.env;
 const { ip, port } = NODE_ENV === 'development' ? configDev : configProd;

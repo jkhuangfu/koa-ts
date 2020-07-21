@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 import * as fs from 'fs';
 import * as path from 'path';
-import model from '../../models/file';
+import model from '@/models/file';
 interface FileObj {
   [key: string]: any;
 }

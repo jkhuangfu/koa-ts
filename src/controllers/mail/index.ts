@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 import * as Koa from 'koa';
-import mailConfig from '../../config/mail';
+import mailConfig from '@/config/mail';
 
 const mailTransport = nodemailer.createTransport(mailConfig);
 const randomCode = (): string => {

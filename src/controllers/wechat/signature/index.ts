@@ -2,7 +2,7 @@ import * as cache from 'memory-cache';
 import * as Koa from 'koa';
 import ticket from './ticket';
 import token from './token';
-import wechatConfig from '../../../config/wechat';
+import wechatConfig from '@/config/wechat';
 const { APP_ID, APP_SECRET } = wechatConfig;
 
 export default async (ctx: Koa.Context) => {

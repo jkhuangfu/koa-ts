@@ -2,7 +2,7 @@ import * as captcha from 'svg-captcha';
 import * as Router from 'koa-router';
 import * as fs from 'fs';
 import * as Koa from 'koa';
-import sendCode from '../controllers/mail';
+import sendCode from '@/controllers/mail';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/common')
