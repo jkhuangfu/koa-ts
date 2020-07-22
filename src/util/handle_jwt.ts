@@ -3,13 +3,13 @@ import * as jwt from 'jsonwebtoken';
 export default class JWT {
   /**
    * @description  token生成方法
-   * @param {string} value 加密对象
+   * @param {string | object | Buffer} value 加密对象
    * @param {string} [secret='^@q676V_8&2'] token加密秘钥
    * @param {string} [expires='7 days'] 生成的token有效期
    * @return {string | boolean} 返回Promise对象(生成的token 失败返回false)
    */
   public static async generate(
-    value: string,
+    value: string | object | Buffer,
     secret: string = '^@q676V_8&2',
     expires: string = '7 days'
   ): Promise<string | boolean> {
