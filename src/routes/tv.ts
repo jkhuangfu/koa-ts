@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import * as Tv from '../controllers/tv';
+import * as Tv from '@/controllers/tv';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/tv')

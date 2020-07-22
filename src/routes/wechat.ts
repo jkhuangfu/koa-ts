@@ -1,8 +1,8 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import reply from '../controllers/wechat/replay';
-import sign from '../controllers/wechat/signature';
-import openid from '../controllers/wechat/openid';
+import reply from '@/controllers/wechat/replay';
+import sign from '@/controllers/wechat/signature';
+import openid from '@/controllers/wechat/openid';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 
 // 微信服务接口加密校验

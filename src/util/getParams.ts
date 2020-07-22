@@ -4,7 +4,7 @@ import * as Koa from 'koa';
  * @param {Koa.Context} ctx
  * @return {Object} -前端传递的参数默认为{}
  */
-export default (ctx: Koa.Context) => {
+export default (ctx: Koa.Context): { [key: string]: any } => {
   const { method } = ctx;
   const typeQuery = ctx.query && Object.keys(ctx.query).length;
   const typePost = ctx.request.body && Object.keys(ctx.request.body).length;

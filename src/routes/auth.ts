@@ -1,8 +1,8 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
-import github from '../controllers/oauth/github';
-import baidu from '../controllers/oauth/baidu';
-import ding from '../controllers/oauth/ding';
+import github from '@/controllers/oauth/github';
+import baidu from '@/controllers/oauth/baidu';
+import ding from '@/controllers/oauth/ding';
 
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 

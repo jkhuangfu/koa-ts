@@ -7,7 +7,7 @@ export default class Encryption {
    * @param {string} type 加密类型
    * @return {string} 加密后的值
    */
-  public static hash(content: string, type: string) {
+  public static hash(content: string, type: string): string {
     const hash = crypto.createHash(type);
     hash.update(content);
     return hash.digest('hex');
@@ -20,7 +20,7 @@ export default class Encryption {
    * @param {string} secretkey 加密秘钥
    * @return {string} 加密后的值
    */
-  public static hmac(content: string, type: string, secretkey: string) {
+  public static hmac(content: string, type: string, secretkey: string): string {
     const hmac = crypto.createHmac(type, secretkey);
     hmac.update(content);
     return hmac.digest('base64');

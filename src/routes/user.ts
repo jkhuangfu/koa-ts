@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import userController from '../controllers/user';
+import userController from '@/controllers/user';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 router
   .prefix('/user')

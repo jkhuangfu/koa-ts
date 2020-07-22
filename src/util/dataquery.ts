@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import { mysqlDev, mysqlOnline } from '../config/mysql';
+import { mysqlDev, mysqlOnline } from '@/config/mysql';
 
 const { NODE_ENV } = process.env;
 const mysqlConfig = NODE_ENV === 'development' ? mysqlDev : mysqlOnline;
