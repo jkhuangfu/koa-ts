@@ -1,11 +1,11 @@
 {
   "apps": {
     "name": "node_server",
-    "script": "./build/app.js",
+    "script": "./src/app.js",
     "args": "--abort-on-uncaught-exception",
-    "watch": ["build"],
+    "watch": ["src"],
     "watch_delay": 1000,
-    "ignore_watch": ["build/upload"],
+    "ignore_watch": ["src/upload"],
     "log_date_format": "YYYY-MM-DD HH:mm Z",
     "instance_var": "INSTANCE_ID"
   }
