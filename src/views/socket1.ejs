@@ -13,15 +13,14 @@
   </body>
   <script type="text/javascript">
     const id = location.search;
-    var socket = io.connect('ws://localhost:3330/socket?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
+    var socket = io.connect('ws://localhost:3330/test1?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
     function a() {
       /**
        * emit 向服务端发送信息
        * post 为服务端自定义的事件名称
        * 123456 为传递的内容
        * */
-      let s = { data: '11111', method: 'handleMessage' };
-      socket.emit('post', s);
+      socket.emit('post', '123456');
     }
     /**
      * 监听服务器返回的数据

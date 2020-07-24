@@ -7,7 +7,7 @@ router
   .get('/', async (ctx: Koa.Context) => {
     // ctx.session.user =
     // ctx.session && (ctx.session.user = { name: 1 });
-    await ctx.render('index');
+    await ctx.render('socket1', { title: 'scoket demo' });
   })
   .get('/io', async (ctx: Koa.Context) => {
     await ctx.render('socket', { title: 'scoket demo' });

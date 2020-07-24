@@ -70,6 +70,7 @@
     "svg-captcha": "^1.4.0",
     "typescript": "^3.7.3",
     "uuid": "^8.2.0",
+    "websocket": "^1.0.31",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
@@ -95,6 +96,7 @@
     "@types/redis": "^2.8.14",
     "@types/socket.io": "^2.1.8",
     "@types/uuid": "^8.0.0",
+    "@types/websocket": "^1.0.1",
     "@types/xml2js": "^0.4.5",
     "ts-node-dev": "1.0.0-pre.44",
     "tslint": "^6.1.2"
