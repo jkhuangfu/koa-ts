@@ -5,7 +5,6 @@ import Socket from './controllers';
 export default (server: Server) => {
   const ws = io(server).of('/socket');
   ws.on('connection', async (socket: io.Socket) => {
-    console.log(Object.getOwnPropertyNames(Test), Object.keys(Test));
     // const { roomId = 'default' } = url.parse(socket.request.url, true).query;
     // // 从redis中获取所有房间
     // const redisRooms = await redisDb.get('socket_rooms');
