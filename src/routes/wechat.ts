@@ -1,8 +1,8 @@
 import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import reply from '@/controllers/wechat/replay';
-import sign from '@/controllers/wechat/signature';
-import openid from '@/controllers/wechat/openid';
+import { reply, Signature, openid } from '@/controllers/wechat';
+// import sign from '@/controllers/wechat/signature';
+// import openid from '@/controllers/wechat/openid';
 const router = new Router<Koa.DefaultContext, Koa.Context>();
 
 // 微信服务接口加密校验
@@ -15,7 +15,7 @@ router
   .prefix('/wechat')
   // 微信分享获取签名
   .post('/signature', async (ctx: Koa.Context) => {
-    await sign(ctx);
+    await Signature(ctx);
   })
   // 获取微信 openid
   .post('/openid', async (ctx: Koa.Context) => {
@@ -30,10 +30,10 @@ router
       // 此处进行微信token验证
       if (signature === crypto) {
         ctx.body = echostr;
-        console.log('微信验证token成功');
+        LOG4.http.info('微信验证token成功');
       } else {
         ctx.body = 'fail';
-        console.log('微信验证token失败');
+        LOG4.http.info('微信验证token失败');
       }
     } else {
       const replyMessageXml = await reply(ctx);

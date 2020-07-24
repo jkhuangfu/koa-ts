@@ -1,14 +1,8 @@
 import * as Koa from 'koa';
 import * as uuid from 'uuid';
 
-interface UserController {
-  Login: (ctx: Koa.Context) => Promise<any>;
-  Register: (ctx: Koa.Context) => Promise<any>;
-  TV: (ctx: Koa.Context) => Promise<any>;
-}
-
-const userController: UserController = {
-  Login: async (ctx: Koa.Context) => {
+export default class UserController {
+  public static async Login(ctx: Koa.Context) {
     const { userName, pwd, token } = getParams(ctx);
     const sql = `select id,wx_id,pass_word from tb_user where user_name = '${userName}'`;
     if (!userName || !pwd || !token) {
@@ -37,8 +31,9 @@ const userController: UserController = {
     await redisDb.set(id + '.jwt_token', uid, 7 * 24 * 60 * 60 * 1000);
     const jToken = await JWT.generate({ userId: id, g_t: generateTime, u_id: uid });
     return response(ctx, 200, { data: jToken }, '登录成功');
-  },
-  Register: async (ctx: Koa.Context) => {
+  }
+
+  public static async Register(ctx: Koa.Context) {
     const captach = Session.get(ctx, 'img');
     const { nickName, passWord, img } = getParams(ctx);
     if (!nickName || !passWord || !img) {
@@ -69,8 +64,9 @@ const userController: UserController = {
     await redisDb.set(insertResult.result.insertId + '.jwt_token', nickName, 7 * 24 * 60 * 60 * 1000);
     const token = await JWT.generate({ userId: insertResult.result.insertId, g_t: generateTime, u_id: uuid.v4() });
     response(ctx, 200, { data: { Token: token } }, '注册成功');
-  },
-  TV: async (ctx: Koa.Context) => {
+  }
+
+  public static async LoginForTv(ctx: Koa.Context) {
     const { user, pwd, token } = getParams(ctx);
     const sql = `select id,wx_id,pass_word from tb_tv_user where user_name = '${user}'`;
     if (!user || !pwd || !token) {
@@ -98,6 +94,4 @@ const userController: UserController = {
     const jToken = await JWT.generate({ g_t: generateTime, u_id: uid });
     return response(ctx, 200, { data: jToken }, '登录成功');
   }
-};
-
-export default userController;
+}

@@ -1,9 +1,11 @@
 import * as io from 'socket.io';
 import { Server } from 'http';
 import Socket from './controllers';
+
 export default (server: Server) => {
   const ws = io(server).of('/socket');
   ws.on('connection', async (socket: io.Socket) => {
+    console.log(Object.getOwnPropertyNames(Test), Object.keys(Test));
     // const { roomId = 'default' } = url.parse(socket.request.url, true).query;
     // // 从redis中获取所有房间
     // const redisRooms = await redisDb.get('socket_rooms');
@@ -13,7 +15,7 @@ export default (server: Server) => {
     //   await redisDb.set('socket_rooms', JSON.stringify([roomId]));
     // } else {
     //   // 判断已存在的房间是否包含当前进入的房间
-    //   !result.includes(roomId) && (await redisDb.set('socket_rooms', JSON.stringify([...result, roomId])));
+    //  !result.includes(roomId) && (await redisDb.set('socket_rooms', JSON.stringify([...result, roomId])));
     // }
     // socket.join(roomId as string, (err: any) => {
     //   // console.log(err);

@@ -24,7 +24,7 @@ const handleReply = async (xmlJson: any) => {
       content = '终于等到你，还好我没放弃!';
     }
   } else {
-    console.log('不支持的微信接收信息', MsgType);
+    LOG4.http.info('不支持的微信接收信息', MsgType);
     content = '暂不支持该类型信息~';
   }
   return content;

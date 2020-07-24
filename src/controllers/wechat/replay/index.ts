@@ -52,10 +52,10 @@ const createReplyXml = (content: any, fromUsername: string, toUsername: string) 
 const reply = async (ctx: Koa.Context) => {
   // 根据接收消息类型进行回复
   const xmlJson: any = await getXML(ctx);
-  console.log('接收到消息', xmlJson);
+  LOG4.http.info('接收到消息', xmlJson);
   const { ToUserName, FromUserName } = xmlJson;
   const content = await handleReply(xmlJson);
-  console.log('返回xml--->', createReplyXml(content, ToUserName, FromUserName));
+  LOG4.http.info('返回xml--->', createReplyXml(content, ToUserName, FromUserName));
   return createReplyXml(content, ToUserName, FromUserName);
 };
 
