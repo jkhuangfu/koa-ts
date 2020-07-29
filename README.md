@@ -1,6 +1,6 @@
-# koa-ts
+# koa2-ts
 
-> node koa2
+> node koa2 typescript
 
 ### 个人学写
 
@@ -8,7 +8,7 @@
 
 ### 启动需要的 DB 支持
 
-> mysql(5.7) redis
+> mysql(5.7) redis mongodb(目前代码注释了链接，可不安装)
 
 ### Start
 
