@@ -17,11 +17,11 @@
   "scripts": {
     "start-online": "cross-env NODE_ENV=production pm2 start ./start.json",
     "start-dev": "cross-env NODE_ENV=development pm2 start ./start.json",
-    "build": "npm run lint && npm run clean && tsc && npm run copy",
-    "copy": "copyfiles -F  ./src/views/**/**/**/**/**/* ./build/ ./src/public/**/**/**/**/**/**/* ./build/ package.json ./build start.json ./build",
+    "build": "npm run lint && npm run clean && tsc && npm run copy && node ./build.js",
+    "copy": "copyfiles package.json ./build start.json ./build yarn.lock ./build",
     "clean": "rimraf ./build",
-    "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
-    "debug": "cross-env NODE_ENV=production ts-node-dev src/app.ts",
+    "dev": "cross-env NODE_ENV=development ts-node-dev --transpile-only src/app.ts",
+    "debug": "cross-env NODE_ENV=production ts-node-dev --transpile-only src/app.ts",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "fix": "tslint --fix -c tslint.json ./src/**/*.ts"
   },
@@ -98,7 +98,7 @@
     "@types/uuid": "^8.0.0",
     "@types/websocket": "^1.0.1",
     "@types/xml2js": "^0.4.5",
-    "ts-node-dev": "1.0.0-pre.44",
+    "ts-node-dev": "^1.0.0-pre.56",
     "tslint": "^6.1.2"
   },
   "_moduleAliases": {
