@@ -62,10 +62,13 @@ function copyFolder(srcDir, tarDir, cb) {
 }
 
 function work() {
+  const start = Date.now();
+  console.log('开始复制非ts文件');
   for (let i = 0; i < tarPath.length; i++) {
     fs.mkdirSync(tarPath[i]);
     copyFolder(srcPath[i], tarPath[i]);
   }
+  console.log('复制非ts文件完成,耗时', Date.now() - start, 'ms');
 }
 
 work();
