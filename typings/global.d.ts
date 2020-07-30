@@ -82,7 +82,7 @@ declare global {
    * @param {any} data
    * @param {string} msg
    */
-  export function response(ctx: Koa.Context, status: number, result: { data: any }, msg: string): void;
+  export function response(ctx: Koa.Context, status: number, result?: { data: any }, msg?: string): void;
 
   /**
    * @description session处理
