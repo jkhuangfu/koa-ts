@@ -4,8 +4,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "target": "ESNEXT",
-    "module": "commonjs",
+    "target": "ES2019",
+    "module": "CommonJS",
     "removeComments": true,
     "outDir": "./build/src",
     "strict": true,
