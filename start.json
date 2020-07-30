@@ -1,6 +1,6 @@
 {
   "apps": {
-    "name": "node_server",
+    "name": "koa-server",
     "script": "./src/app.js",
     "args": "--abort-on-uncaught-exception",
     "watch": ["src"],
