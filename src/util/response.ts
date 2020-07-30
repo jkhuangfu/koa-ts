@@ -4,10 +4,10 @@ import * as Koa from 'koa';
  * 返回值封装
  *
  * @export
- * @param {Koa.ExtendableContext} ctx
- * @param {Number} status
+ * @param {Koa.Context} ctx
+ * @param {number} status
  * @param {any} data
- * @param {String} msg
+ * @param {string} msg
  */
 
 export interface Response {
@@ -15,7 +15,7 @@ export interface Response {
 }
 
 const response = (
-  ctx: Koa.ExtendableContext,
+  ctx: Koa.Context,
   status: number = 200,
   result: Response = { data: null },
   msg: string = 'success'

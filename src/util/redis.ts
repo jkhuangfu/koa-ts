@@ -20,9 +20,9 @@ export default class RedisDb {
    * @param expire 过期时间（单位：秒，可为空，为空则不过期）
    * @return 200
    */
-  public static set(key: string, value: any, expire?: number) {
+  public static set(key: string, value: any, expire?: number): Promise<number | Error> {
     return new Promise((resolve: (value: number | Error) => void) => {
-      client.set(key, value, (err, result) => {
+      client.set(key, value, (err: Error | null) => {
         if (err) {
           LOG4.http.error('redis插入失败：' + err);
           resolve(err);
@@ -41,7 +41,7 @@ export default class RedisDb {
    * @param key 键
    * @return Promise<Any>
    */
-  public static get(key: string) {
+  public static get(key: string): Promise<string | Error | null> {
     return new Promise((resolve: (value: string | Error | null) => void) => {
       client.get(key, (err, result) => {
         if (err) {
@@ -60,11 +60,12 @@ export default class RedisDb {
    * @return Promise<Boolean>
    */
 
-  public static exits(key: string): Promise<boolean | Error> {
-    return new Promise((resolve: (value: boolean | Error) => void) => {
+  public static exits(key: string): Promise<boolean> {
+    return new Promise((resolve: (value: boolean) => void) => {
       client.exists(key, (err, reply) => {
         if (err) {
-          resolve(err);
+          LOG4.http.error('redis检查出错，', err);
+          resolve(false);
           return false;
         }
         if (reply === 1) {

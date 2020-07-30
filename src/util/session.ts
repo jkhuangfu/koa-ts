@@ -6,10 +6,10 @@ import { Context } from 'koa';
  * @function delete 删除session
  */
 export default class Session {
-  public static set(ctx: Context, key: string, value: any, age: number = 24 * 60 * 60 * 1000) {
+  public static set(ctx: Context, key: string, value: any, expires: number = 24 * 60 * 60 * 1000) {
     if (ctx.session) {
       ctx.session[key] = value;
-      ctx.session.maxAge = age;
+      ctx.session.maxAge = expires;
     }
   }
   public static get(ctx: Context, key: string) {

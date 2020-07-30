@@ -1,14 +1,14 @@
-import * as mysql from 'mysql';
+import { createPool, MysqlError, PoolConnection } from 'mysql';
 import { mysqlDev, mysqlOnline } from '@/config/mysql';
 
 const { NODE_ENV } = process.env;
 const mysqlConfig = NODE_ENV === 'development' ? mysqlDev : mysqlOnline;
 /* 使用连接池,开启多sql查询 */
-const pool = mysql.createPool(Object.assign({ multipleStatements: true }, mysqlConfig));
+const pool = createPool(Object.assign({ multipleStatements: true }, mysqlConfig));
 
 interface DBRESULT {
   code: number;
-  msg?: mysql.MysqlError | string;
+  msg?: MysqlError | string;
   result?: any;
 }
 export default class DB {
@@ -18,9 +18,9 @@ export default class DB {
    * @param {any[]} query sql查询值
    * @returns {*} Promise<{code:number,msg?:Error,result:any}>
    */
-  public static handle(sql: string, query: any[]): any {
+  public static handle(sql: string, query: any[]): Promise<DBRESULT> {
     return new Promise((resolve: (value: DBRESULT) => void) => {
-      pool.getConnection((err: mysql.MysqlError, connection: mysql.PoolConnection) => {
+      pool.getConnection((err: MysqlError, connection: PoolConnection) => {
         if (err) {
           resolve({ code: 500, msg: err });
           return false;
