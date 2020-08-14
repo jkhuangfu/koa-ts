@@ -17,6 +17,7 @@ import io from '@/controllers/socket/socket-io';
   await globInit();
   io(server);
   app
+    .use(middleware.timeout)
     .use(middleware.trace)
     .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
     .use(koaStatic(path.join(__dirname, 'public')))
