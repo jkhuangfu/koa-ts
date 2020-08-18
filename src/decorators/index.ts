@@ -1,7 +1,9 @@
 import * as KoaRouter from 'koa-router';
 import * as Koa from 'koa';
-// tslint:disable-next-line: ban-types
-export function Request(url: string, method: string, ...middleware: Function[]) {
+
+type Middleware = (ctx: Koa.Context, next: Koa.Next) => void;
+
+export function Request(url: string, method: string, ...middleware: Middleware[]) {
   return (target: any, name: string, descriptor: PropertyDescriptor) => {
     const fn = descriptor.value;
     descriptor.value = (router: any) => {
@@ -23,9 +25,8 @@ export enum RequestMethod {
 
 export function Controller(prefix: string = '') {
   const router: any = new KoaRouter();
-  if (prefix) {
-    router.prefix(prefix);
-  }
+  router.prefix(prefix);
+
   return (target: any) => {
     const reqList = Object.getOwnPropertyDescriptors(target.prototype);
     for (const v in reqList) {

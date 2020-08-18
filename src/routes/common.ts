@@ -3,9 +3,10 @@ import * as Koa from 'koa';
 import * as captcha from 'svg-captcha';
 import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
 import sendCode from '@/controllers/mail';
+
 @Controller('/common')
 class Common extends BaseRouter {
-  @Request('', RequestMethod.GET)
+  @Request('/captcha', RequestMethod.GET)
   async createCaptcha(ctx: Koa.Context) {
     const creatCaptcha = captcha.createMathExpr({
       noise: 4,
