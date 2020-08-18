@@ -1,9 +1,6 @@
-import * as Router from 'koa-router';
 import * as Koa from 'koa';
 import { reply, Signature, openid } from '@/controllers/wechat';
-// import sign from '@/controllers/wechat/signature';
-// import openid from '@/controllers/wechat/openid';
-const router = new Router<Koa.DefaultContext, Koa.Context>();
+import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
 
 // 微信服务接口加密校验
 const getSignature = (timestamp: Date, nonce: string, token: string) => {
@@ -11,17 +8,20 @@ const getSignature = (timestamp: Date, nonce: string, token: string) => {
   return encryption.hash(arr.join(''), 'sha1');
 };
 
-router
-  .prefix('/wechat')
-  // 微信分享获取签名
-  .post('/signature', async (ctx: Koa.Context) => {
+@Controller('/wechat')
+class Wechat extends BaseRouter {
+  @Request('/signature', RequestMethod.POST)
+  async signature(ctx: Koa.Context) {
     await Signature(ctx);
-  })
-  // 获取微信 openid
-  .post('/openid', async (ctx: Koa.Context) => {
+  }
+
+  @Request('/openid', RequestMethod.POST)
+  async openid(ctx: Koa.Context) {
     await openid(ctx);
-  })
-  .all('/wx_server', async (ctx: Koa.Context) => {
+  }
+
+  @Request('/wx_server', RequestMethod.ALL)
+  async wxServer(ctx: Koa.Context) {
     const { method } = ctx;
     const token = 'wx_token';
     const { signature, echostr, timestamp, nonce } = ctx.query;
@@ -39,6 +39,7 @@ router
       const replyMessageXml = await reply(ctx);
       ctx.body = replyMessageXml;
     }
-  });
+  }
+}
 
-export default router.routes();
+export default Wechat.routes();

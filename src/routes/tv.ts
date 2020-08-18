@@ -1,20 +1,28 @@
-import * as Router from 'koa-router';
 import * as Koa from 'koa';
-import * as Tv from '@/controllers/tv';
-const router = new Router<Koa.DefaultContext, Koa.Context>();
-router
-  .prefix('/tv')
-  .get('/spider', async (ctx: Koa.Context) => {
-    await Tv.spiderData(ctx);
-  })
-  .post('/login', async (ctx: Koa.Context) => {
-    await Tv.tvUser.login(ctx);
-  })
-  .post('/checkLogin', async (ctx: Koa.Context) => {
-    await Tv.tvUser.checkLogin(ctx);
-  })
-  .post('/getList', async (ctx: Koa.Context) => {
-    await Tv.getTvList(ctx);
-  });
+import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import * as TvController from '@/controllers/tv';
 
-export default router.routes();
+@Controller('/tv')
+class Tv extends BaseRouter {
+  @Request('/spider', RequestMethod.GET)
+  async spiderData(ctx: Koa.Context) {
+    await TvController.spiderData(ctx);
+  }
+
+  @Request('/login', RequestMethod.GET)
+  async login(ctx: Koa.Context) {
+    await TvController.tvUser.login(ctx);
+  }
+
+  @Request('/checkLogin', RequestMethod.GET)
+  async checkLogin(ctx: Koa.Context) {
+    await TvController.tvUser.checkLogin(ctx);
+  }
+
+  @Request('/getList', RequestMethod.GET)
+  async getList(ctx: Koa.Context) {
+    await TvController.getTvList(ctx);
+  }
+}
+
+export default Tv.routes();

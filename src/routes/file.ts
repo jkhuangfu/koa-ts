@@ -1,21 +1,26 @@
 import * as Koa from 'koa';
-import * as Router from 'koa-router';
-import File from '@/controllers/file';
+import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import FileController from '@/controllers/file';
 import '@/controllers/watcher';
-const router = new Router<Koa.DefaultContext, Koa.Context>();
-router
-  .prefix('/file')
-  .post('/multi/upload', async (ctx: Koa.Context) => {
-    const res = await File.MultiFile(ctx);
+@Controller('/file')
+class File extends BaseRouter {
+  @Request('/multi/upload', RequestMethod.POST)
+  async multiUpload(ctx: Koa.Context) {
+    const res = await FileController.MultiFile(ctx);
     response(ctx, res ? 200 : 500);
-  })
-  .post('/single/upload', async (ctx: Koa.Context) => {
-    const res = await File.SingleFile(ctx);
-    response(ctx, res ? 200 : 500);
-  })
-  .post('/query', async (ctx: Koa.Context) => {
-    const res = await File.query(ctx);
-    response(ctx, res ? 200 : 500, { data: res });
-  });
+  }
 
-export default router.routes();
+  @Request('/single/upload', RequestMethod.POST)
+  async singleUpload(ctx: Koa.Context) {
+    const res = await FileController.SingleFile(ctx);
+    response(ctx, res ? 200 : 500);
+  }
+
+  @Request('/query', RequestMethod.POST)
+  async query(ctx: Koa.Context) {
+    const res = await FileController.query(ctx);
+    response(ctx, res ? 200 : 500);
+  }
+}
+
+export default File.routes();
