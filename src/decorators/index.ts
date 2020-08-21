@@ -23,11 +23,9 @@ export enum RequestMethod {
   USE = 'use'
 }
 
-export function Controller(prefix: string = '') {
-  const router: any = new KoaRouter();
-  router.prefix(prefix);
-
-  return (target: any) => {
+export function Controller(prefix: string = ''): any {
+  const router = new KoaRouter({ prefix });
+  return (target: () => any) => {
     const reqList = Object.getOwnPropertyDescriptors(target.prototype);
     for (const v in reqList) {
       // 排除类的构造方法

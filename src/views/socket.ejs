@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>测试demo</title>
+    <title>测试demo222</title>
     <!--socket.io-->
     <script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.js"></script>
   </head>
@@ -12,6 +12,8 @@
     <ul id="ultext"></ul>
   </body>
   <script type="text/javascript">
+    document.getElementById('ultext').innerHTML = window.history.length;
+
     const id = location.search;
     var socket = io.connect('ws://localhost:3330/socket?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
     function a() {
