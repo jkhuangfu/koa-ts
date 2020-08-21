@@ -1,18 +1,16 @@
 import * as Koa from 'koa';
 import UserController from '@/controllers/user';
-import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import { Controller, Request } from '@/decorators';
 
 @Controller('/user')
-class User extends BaseRouter {
-  @Request('/login', RequestMethod.POST)
+export default class User {
+  @Request('/login', 'post')
   async login(ctx: Koa.Context) {
     await UserController.Login(ctx);
   }
 
-  @Request('/register', RequestMethod.POST)
+  @Request('/register', 'post')
   async register(ctx: Koa.Context) {
     await UserController.Register(ctx);
   }
 }
-
-export default User.routes();

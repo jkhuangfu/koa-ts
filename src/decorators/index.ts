@@ -3,7 +3,25 @@ import * as Koa from 'koa';
 
 type Middleware = (ctx: Koa.Context, next: Koa.Next) => void;
 
-export function Request(url: string, method: string, ...middleware: Middleware[]) {
+enum RequestMethod {
+  'get',
+  'post',
+  'put',
+  'delete',
+  'all',
+  'use'
+}
+
+type Methods = keyof typeof RequestMethod;
+
+/**
+ * @export
+ * @param {string} url 请求路径
+ * @param {Methods} method 请求方法 e.g: post
+ * @param {...Middleware[]} middleware 中间件
+ * @returns
+ */
+export function Request(url: string, method: Methods, ...middleware: Middleware[]) {
   return (target: any, name: string, descriptor: PropertyDescriptor) => {
     const fn = descriptor.value;
     descriptor.value = (router: any) => {
@@ -14,15 +32,11 @@ export function Request(url: string, method: string, ...middleware: Middleware[]
   };
 }
 
-export enum RequestMethod {
-  GET = 'get',
-  POST = 'post',
-  PUT = 'put',
-  DELETE = 'delete',
-  ALL = 'all',
-  USE = 'use'
-}
-
+/**
+ * @export
+ * @param {string} [prefix=''] 请求路径前缀 默认空
+ * @returns {*}
+ */
 export function Controller(prefix: string = ''): any {
   const router = new KoaRouter({ prefix });
   return (target: ClassDecorator) => {
@@ -34,10 +48,6 @@ export function Controller(prefix: string = ''): any {
         fn(router);
       }
     }
-    return router;
+    return router.routes();
   };
-}
-
-export class BaseRouter {
-  public static routes() {}
 }

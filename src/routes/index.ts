@@ -6,3 +6,4 @@ import common from './common';
 import wechat from './wechat';
 import tv from './tv';
 export default { user, file, view, auth, common, wechat, tv };
+// export default { auth, common };

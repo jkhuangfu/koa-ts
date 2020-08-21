@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as Koa from 'koa';
 import * as captcha from 'svg-captcha';
-import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
 
 @Controller('/common')
-class Common extends BaseRouter {
-  @Request('/captcha', RequestMethod.GET)
+export default class Common {
+  @Request('/captcha', 'get')
   async createCaptcha(ctx: Koa.Context) {
     const creatCaptcha = captcha.createMathExpr({
       noise: 4,
@@ -19,13 +19,13 @@ class Common extends BaseRouter {
     ctx.response.body = creatCaptcha.data;
   }
 
-  @Request('/mail', RequestMethod.POST)
+  @Request('/mail', 'post')
   async sendMail(ctx: Koa.Context) {
     const { code, data, msg } = (await sendCode(ctx)) as any;
     response(ctx, code, { data }, msg);
   }
 
-  @Request('/video', RequestMethod.POST)
+  @Request('/video', 'post')
   async video(ctx: Koa.Context) {
     const path = '/Users/huangfu/Downloads/dagangwangwei.mp4';
     const range: string | null = ctx.req.headers.range || null;
@@ -57,7 +57,7 @@ class Common extends BaseRouter {
     }
   }
 
-  @Request('/tt', RequestMethod.GET)
+  @Request('/tt', 'get')
   async tool(ctx: Koa.Context) {
     const data = await fs.readFileSync('/Users/huangfu/Desktop/t.txt');
     const arr = data.toString().split('\n');
@@ -76,5 +76,3 @@ class Common extends BaseRouter {
     response(ctx, 200, { data: null }, '1');
   }
 }
-
-export default Common.routes();

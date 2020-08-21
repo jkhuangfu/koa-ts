@@ -4,12 +4,11 @@ import routeSource from '@/routes';
 
 const router = new Route<Koa.DefaultContext, Koa.Context>();
 
-type R = {
+interface RouterMiddleware {
   [key: string]: any;
-};
+}
 
-const routes: R = routeSource;
-
+const routes: RouterMiddleware = routeSource;
 for (const i of Object.keys(routes)) {
   router.use('', routes[i]);
 }

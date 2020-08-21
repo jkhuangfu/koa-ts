@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 import { reply, Signature, openid } from '@/controllers/wechat';
-import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import { Controller, Request } from '@/decorators';
 
 // 微信服务接口加密校验
 const getSignature = (timestamp: Date, nonce: string, token: string) => {
@@ -9,18 +9,18 @@ const getSignature = (timestamp: Date, nonce: string, token: string) => {
 };
 
 @Controller('/wechat')
-class Wechat extends BaseRouter {
-  @Request('/signature', RequestMethod.POST)
+export default class Wechat {
+  @Request('/signature', 'post')
   async signature(ctx: Koa.Context) {
     await Signature(ctx);
   }
 
-  @Request('/openid', RequestMethod.POST)
+  @Request('/openid', 'post')
   async openid(ctx: Koa.Context) {
     await openid(ctx);
   }
 
-  @Request('/wx_server', RequestMethod.ALL)
+  @Request('/wx_server', 'all')
   async wxServer(ctx: Koa.Context) {
     const { method } = ctx;
     const token = 'wx_token';
@@ -41,5 +41,3 @@ class Wechat extends BaseRouter {
     }
   }
 }
-
-export default Wechat.routes();

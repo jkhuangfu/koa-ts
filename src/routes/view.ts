@@ -1,17 +1,15 @@
 import * as Koa from 'koa';
-import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import { Controller, Request } from '@/decorators';
 
 @Controller()
-class View extends BaseRouter {
-  @Request('/', RequestMethod.GET)
+export default class View {
+  @Request('/', 'get')
   async home(ctx: Koa.Context) {
     await ctx.render('socket1', { title: 'scoket demo' });
   }
 
-  @Request('/io', RequestMethod.GET)
+  @Request('/io', 'get')
   async io(ctx: Koa.Context) {
     await ctx.render('socket', { title: 'scoket demo' });
   }
 }
-
-export default View.routes();

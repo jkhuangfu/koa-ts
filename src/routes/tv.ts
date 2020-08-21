@@ -1,28 +1,26 @@
 import * as Koa from 'koa';
-import { Controller, Request, BaseRouter, RequestMethod } from '@/decorators';
+import { Controller, Request } from '@/decorators';
 import * as TvController from '@/controllers/tv';
 
 @Controller('/tv')
-class Tv extends BaseRouter {
-  @Request('/spider', RequestMethod.GET)
+export default class Tv {
+  @Request('/spider', 'get')
   async spiderData(ctx: Koa.Context) {
     await TvController.spiderData(ctx);
   }
 
-  @Request('/login', RequestMethod.GET)
+  @Request('/login', 'post')
   async login(ctx: Koa.Context) {
     await TvController.tvUser.login(ctx);
   }
 
-  @Request('/checkLogin', RequestMethod.GET)
+  @Request('/checkLogin', 'post')
   async checkLogin(ctx: Koa.Context) {
     await TvController.tvUser.checkLogin(ctx);
   }
 
-  @Request('/getList', RequestMethod.GET)
+  @Request('/getList', 'post')
   async getList(ctx: Koa.Context) {
     await TvController.getTvList(ctx);
   }
 }
-
-export default Tv.routes();
