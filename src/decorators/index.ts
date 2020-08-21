@@ -25,7 +25,7 @@ export enum RequestMethod {
 
 export function Controller(prefix: string = ''): any {
   const router = new KoaRouter({ prefix });
-  return (target: () => any) => {
+  return (target: ClassDecorator) => {
     const reqList = Object.getOwnPropertyDescriptors(target.prototype);
     for (const v in reqList) {
       // 排除类的构造方法
