@@ -25,7 +25,8 @@ import io from '@/controllers/socket/socket-io';
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
     .use(middleware.koaCors)
-    .use(middleware.router)
+    .use(middleware.router.routes())
+    .use(middleware.router.allowedMethods())
     .on('error', (err: Error) => {
       LOG4.error.error(err);
     });

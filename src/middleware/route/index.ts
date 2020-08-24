@@ -13,4 +13,4 @@ for (const i of Object.keys(routes)) {
   router.use('', routes[i]);
 }
 
-export default router.routes();
+export default router;
