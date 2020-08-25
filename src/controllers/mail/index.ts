@@ -4,15 +4,12 @@ import mailConfig from '@/config/mail';
 
 const mailTransport = nodemailer.createTransport(mailConfig);
 const randomCode = (): string => {
-  return (
-    Math.floor(Math.random() * 10) +
-    '' +
-    Math.floor(Math.random() * 10) +
-    '' +
-    Math.floor(Math.random() * 10) +
-    '' +
-    Math.floor(Math.random() * 10)
-  );
+  return new Array(4)
+    .fill('')
+    .map((i, index) => {
+      return Math.floor(Math.random() * 10);
+    })
+    .join('');
 };
 
 const sendCode = async (ctx: Koa.Context) => {
@@ -46,8 +43,7 @@ const sendCode = async (ctx: Koa.Context) => {
           const oneDay = 24 * 60 * 60;
           const now = new Date();
           const nowSecond = now.getHours() * 60 * 60 + now.getMinutes() * 60 + now.getSeconds();
-          await redisDb.set(email, code, 5 * 60);
-          await redisDb.set(`${email}_count`, count, oneDay - nowSecond);
+          await Promise.all([redisDb.set(email, code, 5 * 60), redisDb.set(`${email}_count`, count, oneDay - nowSecond)]);
           return resolve({ code: 200, data: null, msg: '发送成功' });
         }
       }
