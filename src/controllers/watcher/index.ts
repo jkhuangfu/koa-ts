@@ -3,10 +3,7 @@ import * as fs from 'fs';
 import * as chokidar from 'chokidar';
 import * as AdmZip from 'adm-zip';
 let ready: boolean = false;
-const WATCH_PATH: string = path.join(
-  process.cwd(),
-  process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/'
-);
+const WATCH_PATH: string = path.join(process.cwd(), '/src/upload/');
 // 创建上传目录
 fs.exists(WATCH_PATH, exists => {
   if (!exists) fs.mkdirSync(WATCH_PATH);
