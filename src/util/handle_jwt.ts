@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { resolve } from 'path';
 
 export default class JWT {
   /**
@@ -12,9 +13,16 @@ export default class JWT {
     value: string | object | Buffer,
     secret: string = '^@q676V_8&2',
     expires: string = '7 days'
-  ): Promise<string | boolean> {
+  ): Promise<string | boolean | undefined> {
     try {
-      return jwt.sign(value, secret, { expiresIn: expires });
+      return new Promise((res: (value: string | boolean | undefined) => void) => {
+        jwt.sign(value, secret, { expiresIn: expires }, (e, encode) => {
+          if (e || e === null) {
+            return res(false);
+          }
+          res(encode);
+        });
+      });
     } catch (e) {
       LOG4.http.error('jwt sign error --->', e);
       return false;
@@ -26,9 +34,16 @@ export default class JWT {
    * @param {string} [secret='^@q676V_8&2'] token加密秘钥
    * @return {object | string | boolean} 返回Promise对象(token解密成功的值,失败返回false)
    */
-  public static async verify(token: string, secret: string = '^@q676V_8&2'): Promise<object | string | boolean> {
+  public static async verify(token: string, secret: string = '^@q676V_8&2'): Promise<object | string | boolean | undefined> {
     try {
-      return jwt.verify(token, secret);
+      return new Promise((res: (value: object | string | boolean | undefined) => void) => {
+        jwt.verify(token, secret, (error, result) => {
+          if (error) {
+            return res(false);
+          }
+          res(result);
+        });
+      });
     } catch (e) {
       LOG4.http.error('jwt verify error --->', e);
       return false;

@@ -3,10 +3,10 @@ import * as Koa from 'koa';
 import * as captcha from 'svg-captcha';
 import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
-
+import jwt from '@/middleware/checklogin';
 @Controller('/common')
 export default class Common {
-  @Request('/captcha', 'get')
+  @Request('/captcha', 'get', jwt)
   async createCaptcha(ctx: Koa.Context) {
     const creatCaptcha = captcha.createMathExpr({
       noise: 4,

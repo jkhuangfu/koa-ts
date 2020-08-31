@@ -22,12 +22,14 @@ export default class DB {
     return new Promise((resolve: (value: DBRESULT) => void) => {
       pool.getConnection((err: MysqlError, connection: PoolConnection) => {
         if (err) {
+          LOG4.http.error('数据库错误', err);
           resolve({ code: 500, msg: err });
           return false;
         }
         try {
           connection.query(sql, query, (e, response) => {
             if (e) {
+              LOG4.http.error('数据库错误', e);
               resolve({ code: 500, msg: e });
             } else {
               resolve({ code: 200, result: response });
@@ -35,6 +37,7 @@ export default class DB {
             connection.release();
           });
         } catch (error) {
+          LOG4.http.error('数据库错误', error);
           resolve({ code: 500, msg: `程序异常，sql操作失败--->${error}` });
         }
       });

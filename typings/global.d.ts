@@ -101,10 +101,10 @@ declare global {
      * @description  token生成方法
      * @param {string | object | Buffer} value 加密对象
      * @param {string} [secret='^@q676V_8&2'] token加密秘钥
-     * @param {string} [expires='7 days'] 生成的token有效期
-     * @return {string | boolean} 返回Promise对象(生成的token 失败返回false)
+     * @param {string} [expires='7 days'] 生成的token有效期默认一周
+     * @return {string | boolean | undefined} 返回Promise对象(生成的token 失败返回false)
      */
-    static generate(value: string | object | Buffer, secret?: string, expires?: string): Promise<string | boolean>;
+    static generate(value: string | object | Buffer, secret?: string, expires?: string): Promise<string | boolean | undefined>;
     /**
      * @description  验证token是否有效的方法
      * @param {string} token 需要验证的token

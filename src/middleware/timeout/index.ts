@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+
 export default async (ctx: Context, next: Next) => {
   let timer: NodeJS.Timeout;
   const timeout = 4000; // 设置超时时间
