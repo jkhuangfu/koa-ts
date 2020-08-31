@@ -11,7 +11,6 @@ const jwtCheck = async (ctx: Koa.Context, next: Koa.Next) => {
   const redisInfo = user && (await redisDb.get(`${user.userId}.jwt_token`));
   if (!authorization || !user || !redisInfo || redisInfo !== authorization) {
     ctx.status = 401;
-    ctx.body = 'access_denied';
     return;
   }
   await next();

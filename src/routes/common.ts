@@ -3,10 +3,9 @@ import * as Koa from 'koa';
 import * as captcha from 'svg-captcha';
 import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
-import jwt from '@/middleware/checklogin';
 @Controller('/common')
 export default class Common {
-  @Request('/captcha', 'get', jwt)
+  @Request('/captcha', 'get')
   async createCaptcha(ctx: Koa.Context) {
     const creatCaptcha = captcha.createMathExpr({
       noise: 4,
@@ -15,8 +14,8 @@ export default class Common {
     });
     LOG4.http.info('======获取验证码=====' + creatCaptcha.text);
     Session.set(ctx, 'img', creatCaptcha.text, 1 * 60 * 1000); // 存储验证码到session 有效期1分钟
-    ctx.response.type = 'svg';
-    ctx.response.body = creatCaptcha.data;
+    ctx.type = 'svg';
+    ctx.body = creatCaptcha.data;
   }
 
   @Request('/mail', 'post')
