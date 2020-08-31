@@ -26,5 +26,5 @@
 
 3、yarn install --production || npm install --production
 
-4、npm run start-dev(online) 或 yarn start-dev(online)
+4、npm run start || yarn start (需要全局安装pm2 npm i -g pm2)
 ```

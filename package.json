@@ -4,8 +4,6 @@
   "description": "使用typescript开发koa2",
   "main": "app.ts",
   "scriptsDescription": {
-    "start-online": "生产环境启动脚本(打包后的build文件夹执行)",
-    "start-dev": "本地环境启动脚本(打包后的build文件夹执行)",
     "build": "打包",
     "copy": "复制非ts文件到打包目录",
     "clean": "清理打包目录",
@@ -15,8 +13,7 @@
     "fix": "tslint修复"
   },
   "scripts": {
-    "start-online": "cross-env NODE_ENV=production pm2 start ./start.json",
-    "start-dev": "cross-env NODE_ENV=development pm2 start ./start.json",
+    "start":"pm2 start ./start.json",
     "build": "npm run lint && npm run clean && tsc && npm run copy && node ./build.js",
     "copy": "copyfiles package.json ./build start.json ./build yarn.lock ./build",
     "clean": "rimraf ./build",
