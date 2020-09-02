@@ -42,24 +42,23 @@ declare global {
   class redisDb {
     /**
      * @description 设置键值对
-     * @param key 键
-     * @param value 值
+     * @param {string} key 键
+     * @param {any} value 值
      * @param expire 过期时间（单位：秒，可为空，为空则不过期）
-     * @return 200
+     * @return 200 代表成功其他代表失败
      */
-    static set(key: string, value: any, expire?: number): Promise<number | Error>;
-
+    public static set(key: string, value: any, expire?: number): Promise<number | Error>;
     /**
      * @description 获取对应value
      * @param key 键
-     * @return Promise<string | Error | null>
+     * @return Promise<string | boolean | null>
      */
-    static get(key: string): Promise<string | Error | null>;
+    static get(key: string): Promise<string | boolean | null>;
 
     /**
      * @description 判断是否存在该key
      * @param key
-     * @return Promise<boolean>
+     * @return true代表存在否则不存在 Promise<Boolean>
      */
 
     static exits(key: string): Promise<boolean>;
@@ -67,10 +66,39 @@ declare global {
     /**
      * @description 根据key值删除数据
      * @param keys 要删除的key 单个为String 多个为Array[key1,key2]
-     * @return Promise<boolean>
+     * @return Promise<Boolean>
      */
 
     static del(keys: string | string[]): Promise<boolean>;
+
+    /**
+     * @description 设置hash类型
+     * @param key 键
+     * @param args 值
+     * @param expire 过期时间（单位：秒，可为空，为空则不过期）
+     * @return 200 代表成功其他代表失败
+     */
+    static hmset(key: string, ...args: any[]): Promise<number | Error>;
+    /**
+     * @description 查询所有的hash值
+     * @param {string} key
+     * @returns Promise<boolean |  {[key: string]: string;}>
+     */
+    static hgetall(key: string): Promise<boolean | { [key: string]: string }>;
+
+    /**
+     * @description 查询所有的hash值中field对应的具体值
+     * @param {string} key
+     * @returns Promise<boolean | string}>
+     */
+    static hget(key: string, field: string): Promise<string | boolean>;
+
+    /**
+     * @description 删除hash中的对应list
+     * @param {string} key
+     * @returns 200代表删除成功否则失败 Promise<boolean | number>
+     */
+    static hdel(key: string, field: string): Promise<number | boolean>;
   }
 
   /**

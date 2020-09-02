@@ -15,18 +15,17 @@ client.on('connect', () => {
 export default class RedisDb {
   /**
    * @description 设置键值对
-   * @param key 键
-   * @param value 值
+   * @param {string} key 键
+   * @param {any} value 值
    * @param expire 过期时间（单位：秒，可为空，为空则不过期）
-   * @return 200
+   * @return 200 代表成功其他代表失败
    */
   public static set(key: string, value: any, expire?: number): Promise<number | Error> {
     return new Promise((resolve: (value: number | Error) => void) => {
       client.set(key, value, (err: Error | null) => {
         if (err) {
-          LOG4.http.error('redis插入失败：' + err);
-          resolve(err);
-          return false;
+          LOG4.http.error('redis插入(set)失败：' + err);
+          return resolve(err);
         }
         if (expire && expire > 0) {
           client.expire(key, expire);
@@ -39,15 +38,14 @@ export default class RedisDb {
   /**
    * @description 获取对应value
    * @param key 键
-   * @return Promise<Any>
+   * @return Promise<string | boolean | null>
    */
-  public static get(key: string): Promise<string | Error | null> {
-    return new Promise((resolve: (value: string | Error | null) => void) => {
+  public static get(key: string): Promise<string | boolean | null> {
+    return new Promise((resolve: (value: string | boolean | null) => void) => {
       client.get(key, (err, result) => {
         if (err) {
           LOG4.http.error('redis获取失败：' + err);
-          resolve(err);
-          return false;
+          return resolve(false);
         }
         resolve(result);
       });
@@ -57,7 +55,7 @@ export default class RedisDb {
   /**
    * @description 判断是否存在该key
    * @param key
-   * @return Promise<Boolean>
+   * @return true代表存在否则不存在 Promise<Boolean>
    */
 
   public static exits(key: string): Promise<boolean> {
@@ -65,13 +63,12 @@ export default class RedisDb {
       client.exists(key, (err, reply) => {
         if (err) {
           LOG4.http.error('redis检查出错，', err);
-          resolve(false);
-          return false;
+          return resolve(false);
         }
         if (reply === 1) {
-          resolve(true);
+          return resolve(true);
         } else {
-          resolve(false);
+          return resolve(false);
         }
       });
     });
@@ -91,6 +88,84 @@ export default class RedisDb {
         } else if (val >= 1) {
           resolve(true);
         }
+      });
+    });
+  }
+
+  /**
+   * @description 设置hash类型
+   * @param key 键
+   * @param args 值
+   * @param expire 过期时间（单位：秒，可为空，为空则不过期）
+   * @return 200 代表成功其他代表失败
+   */
+  public static hmset(key: string, ...args: any[]): Promise<number | Error> {
+    return new Promise((resolve: (value: number | Error) => void) => {
+      client.hmset(key, ...args, (error, ressult) => {
+        if (error) {
+          LOG4.http.error('redis插入(hmset)失败：' + error);
+          return resolve(error);
+        }
+        resolve(200);
+      });
+    });
+  }
+  /**
+   * @description 查询所有的hash值
+   * @param {string} key
+   * @returns Promise<boolean |  {[key: string]: string;}>
+   */
+  public static hgetall(
+    key: string
+  ): Promise<
+    | boolean
+    | {
+        [key: string]: string;
+      }
+  > {
+    return new Promise(
+      (
+        resolve: (
+          value:
+            | boolean
+            | {
+                [key: string]: string;
+              }
+        ) => void
+      ) => {
+        client.hgetall(key, (error, result) => {
+          if (error) return resolve(false);
+          resolve(result);
+        });
+      }
+    );
+  }
+
+  /**
+   * @description 查询所有的hash值中field对应的具体值
+   * @param {string} key
+   * @returns Promise<boolean | string}>
+   */
+  public static hget(key: string, field: string): Promise<string | boolean> {
+    return new Promise((resolve: (value: boolean | string) => void) => {
+      client.hget(key, field, (error, result) => {
+        if (error) return resolve(false);
+        console.log(key, field, error, result);
+        resolve(result);
+      });
+    });
+  }
+
+  /**
+   * @description 删除hash中的对应list
+   * @param {string} key
+   * @returns 200代表删除成功否则失败 Promise<boolean | number>
+   */
+  public static hdel(key: string, field: string): Promise<number | boolean> {
+    return new Promise((resolve: (value: number | boolean) => void) => {
+      client.hdel(key, field, error => {
+        if (error) return resolve(false);
+        resolve(200);
       });
     });
   }
