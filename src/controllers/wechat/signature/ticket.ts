@@ -1,5 +1,3 @@
-import * as cache from 'memory-cache';
-
 export default async (token: string) => {
   LOG4.http.info('===获取ticket====token=>' + token);
   const url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${token}&type=jsapi`;
@@ -10,6 +8,6 @@ export default async (token: string) => {
     return false;
   }
   LOG4.http.info('ticket===' + data.ticket);
-  await cache.put('jsapi_ticket', data.ticket, 7200000); // 放入缓存7200000ms有效期
+  await redisDb.set('jsapi_ticket', data.ticket, 7200); // 放入缓存7200s有效期
   return data.ticket;
 };
