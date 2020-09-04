@@ -28,7 +28,7 @@ import io from '@/controllers/socket/socket-io';
     .use(middleware.router.routes())
     .use(middleware.router.allowedMethods())
     .on('error', (err: Error) => {
-      LOG4.error.error(err);
+      LOG4.app.error(err);
     });
   server.listen(3330, () => {
     LOG4.app.info('server is running at port 3330');
