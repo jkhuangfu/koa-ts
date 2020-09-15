@@ -17,10 +17,10 @@ export default class JWT {
     try {
       return new Promise((res: (value: string | boolean | undefined) => void) => {
         jwt.sign(value, secret, { expiresIn: expires }, (e, encode) => {
-          if (e || e === null) {
+          if (e) {
             return res(false);
           }
-          res(encode);
+          return res(encode);
         });
       });
     } catch (e) {

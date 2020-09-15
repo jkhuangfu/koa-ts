@@ -1,3 +1,4 @@
+import log4 from '@/util/log4js';
 import * as Koa from 'koa';
 import * as uuid from 'uuid';
 export default class UserController {
@@ -8,15 +9,24 @@ export default class UserController {
       return response(ctx, 201, { data: null }, '缺少参数');
     }
     const result: any = await DB.handle(sql, []);
+
     if (result.code === 500) {
       return response(ctx, 500, { data: null }, '信息查询失败');
     }
-    const { wx_id, pass_word, id } = result.result[0];
+
+    const queryData = result.result;
+
+    if (!queryData.length) {
+      LOG4.http.info(userName, '用户名不存在');
+      return response(ctx, 205, { data: null }, '账号信息错误');
+    }
+
+    const { wx_id, pass_word, id } = queryData[0];
 
     if (!wx_id) {
       return response(ctx, 203, { data: null }, '账号信息错误');
     }
-
+    console.log(encryption.hash(passWord + '_drnet', 'md5'));
     if (pass_word !== encryption.hash(passWord + '_drnet', 'md5')) {
       return response(ctx, 204, { data: null }, '账号信息错误');
     }
