@@ -4,13 +4,13 @@ import FileController from '@/controllers/file';
 import '@/controllers/watcher';
 @Controller('/file')
 export default class File {
-  @Request('/multi/upload', 'post')
+  @Request('/multi/upload', 'post', false)
   async multiUpload(ctx: Koa.Context) {
     const res = await FileController.MultiFile(ctx);
     response(ctx, res ? 200 : 500);
   }
 
-  @Request('/single/upload', 'post')
+  @Request('/single/upload', 'post', false)
   async singleUpload(ctx: Koa.Context) {
     const res = await FileController.SingleFile(ctx);
     response(ctx, res ? 200 : 500);

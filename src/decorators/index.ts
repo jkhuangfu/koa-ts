@@ -21,12 +21,16 @@ type Methods = keyof typeof RequestMethod;
  * @param {...Middleware[]} middleware 中间件
  * @returns
  */
-export function Request(url: string, method: Methods, ...middleware: Middleware[]) {
+export function Request(url: string, method: Methods, log4: boolean = true, ...middleware: Middleware[]) {
   return (target: any, name: string, descriptor: PropertyDescriptor) => {
     const fn = descriptor.value;
     descriptor.value = (router: any) => {
       router[method](url, ...middleware, async (ctx: Koa.Context, next: Koa.Next) => {
         await fn(ctx, next);
+        // 记录返回值
+        if (log4) {
+          LOG4.http.trace('返回值:', ctx.body);
+        }
       });
     };
   };

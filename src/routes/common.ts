@@ -5,7 +5,7 @@ import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
 @Controller('/common')
 export default class Common {
-  @Request('/captcha', 'get')
+  @Request('/captcha', 'get', false)
   async createCaptcha(ctx: Koa.Context) {
     const creatCaptcha = captcha.createMathExpr({
       noise: 4,
@@ -24,7 +24,7 @@ export default class Common {
     response(ctx, code, { data }, msg);
   }
 
-  @Request('/video', 'post')
+  @Request('/video', 'post', false)
   async video(ctx: Koa.Context) {
     const path = '/Users/huangfu/Downloads/dagangwangwei.mp4';
     const range: string | null = ctx.req.headers.range || null;
