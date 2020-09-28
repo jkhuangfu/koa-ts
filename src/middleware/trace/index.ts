@@ -1,5 +1,4 @@
 import * as Koa from 'koa';
-import ignore from './ignore';
 // 处理错误信息,发送错误码,记录请求耗时
 export default async (ctx: Koa.Context, next: Koa.Next) => {
   try {
@@ -10,9 +9,9 @@ export default async (ctx: Koa.Context, next: Koa.Next) => {
     const params = JSON.stringify(getParams(ctx));
     const useTime = END_TIME - START_TIME;
     LOG4.http.trace(
-      `请求方式-->${method},请求连接-->${path},返回状态码-->${status},传递参数-->${params},返回值-->${
-        !ignore.includes(path) ? JSON.stringify(ctx.body) : null
-      },耗时--> ${useTime} MS `
+      `请求方式-->${method},请求连接-->${path},返回状态码-->${status},传递参数-->${params},返回值-->${JSON.stringify(
+        ctx.body
+      )},耗时--> ${useTime} MS `
     );
     if (ctx.status >= 400) {
       return (ctx.body = { url: `${path}`, status: ctx.status, msg: ctx.message, timestamp: Date.now() });

@@ -1,6 +1,6 @@
 const authId = ['ox5xSuH5ZNfa0AFt5XdB7pFriEM0', 'ox5xSuEo5joUlCN2_tA2FFZ48Qu4'];
 const createRandom = (num: number) => {
-  const str = '23QWERTYUIOPASDFGHJKLZXCVBNM1456789zxcvbnmasdfghjkqwertyuip';
+  const str = '23QWERTYUPASDFGHJKLZXCVBNM456789zxcvbnmasdfghjkqwertyup';
   let res: string = '';
   for (let i = 0; i < num; i++) {
     res += str[Math.floor(Math.random() * str.length)];

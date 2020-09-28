@@ -8,6 +8,7 @@ import * as helmet from 'koa-helmet';
 import { globInit } from '@/util';
 import middleware from '@/middleware';
 import io from '@/controllers/socket/socket-io';
+// import '@/bull';
 // import './mongoose';
 
 (async () => {

@@ -1,7 +1,6 @@
 import * as ejs from 'ejs';
 import * as Koa from 'koa';
 import * as xml2js from 'xml2js';
-import * as getRawBody from 'raw-body';
 import wx_xml_template from './template';
 import handleReply from './handleReply';
 // 解析XML为JSON对象
@@ -18,12 +17,7 @@ const parseXML = (xml: any) => {
 
 // 接收消息 返回 JSON对象
 const getXML = async (ctx: Koa.Context) => {
-  const xml = await getRawBody(ctx.req, {
-    length: ctx.headers['content-length'],
-    limit: '1mb',
-    encoding: 'utf-8'
-  });
-  return await parseXML(xml);
+  return await parseXML(getParams(ctx));
 };
 // 创建消息模板
 const createReplyXml = (content: any, fromUsername: string, toUsername: string) => {
