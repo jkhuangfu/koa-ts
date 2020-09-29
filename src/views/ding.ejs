@@ -23,6 +23,7 @@
   </head>
   <body>
     <div id="box"></div>
+    <div onclick="test()">获取信息</div>
   </body>
   <script>
     var url = encodeURIComponent('http://7.vaiwan.com/ding');
@@ -41,7 +42,7 @@
 
     var handleMessage = function (event) {
       var origin = event.origin;
-      console.log('origin', event.origin);
+      // console.log('origin', event.origin);
       if (origin == 'https://login.dingtalk.com') {
         //判断是否来自ddLogin扫码事件。
         var loginTmpCode = event.data;
@@ -64,6 +65,21 @@
       window.addEventListener('message', handleMessage, false);
     } else if (typeof window.attachEvent != 'undefined') {
       window.attachEvent('onmessage', handleMessage);
+    }
+
+    function parseUri(name) {
+      const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      const r = (window.location.search || '').substr(1).match(reg);
+      if (r !== null) {
+        return unescape(r[2]);
+      }
+      return false;
+    }
+
+    async function test() {
+      const code = parseUri('code');
+      const data = await fetch('/common/at?code=' + code).then(res => res.json());
+      console.log(data);
     }
   </script>
 </html>

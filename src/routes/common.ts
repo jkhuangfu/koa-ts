@@ -3,6 +3,7 @@ import * as Koa from 'koa';
 import * as captcha from 'svg-captcha';
 import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
+import { getUserDetailByUserid } from '@/controllers/oauth/ding';
 @Controller('/common')
 export default class Common {
   @Request('/captcha', 'get', { log: false })
@@ -22,6 +23,11 @@ export default class Common {
   async sendMail(ctx: Koa.Context) {
     const { code, data, msg } = (await sendCode(ctx)) as any;
     response(ctx, code, { data }, msg);
+  }
+  @Request('/at', 'get')
+  async getDingat(ctx: Koa.Context) {
+    const data = await getUserDetailByUserid(ctx);
+    response(ctx, 200, { data });
   }
 
   @Request('/video', 'post', { log: false })
