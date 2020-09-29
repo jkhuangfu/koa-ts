@@ -8,9 +8,9 @@ export default async (ctx: Koa.Context, next: Koa.Next) => {
     const { method, path, status } = ctx;
     const params = JSON.stringify(getParams(ctx));
     const useTime = END_TIME - START_TIME;
-    LOG4.http.trace(`请求方式-->${method},请求连接-->${path},返回状态码-->${status},传递参数-->${params},耗时--> ${useTime} MS `);
-    if (ctx.status >= 400) {
-      return (ctx.body = { url: `${path}`, status: ctx.status, msg: ctx.message, timestamp: Date.now() });
+    LOG4.http.trace(`请求方式-->${method},请求连接-->${path},传递参数-->${params},耗时--> ${useTime} MS `);
+    if (status >= 400) {
+      return (ctx.body = { url: `${path}`, status, msg: ctx.message, timestamp: Date.now() });
     }
   } catch (err) {
     ctx.status = err.statusCode || err.status || 500;

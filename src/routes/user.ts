@@ -1,7 +1,6 @@
 import * as Koa from 'koa';
 import UserController from '@/controllers/user';
 import { Controller, Request } from '@/decorators';
-
 @Controller('/user')
 export default class User {
   @Request('/login', 'post')

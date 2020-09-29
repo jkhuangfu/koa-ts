@@ -14,22 +14,28 @@ enum RequestMethod {
 
 type Methods = keyof typeof RequestMethod;
 
+type OPTIONS = {
+  log?: boolean;
+  middleware?: Middleware[];
+};
+
 /**
  * @export
  * @param {string} url 请求路径
  * @param {Methods} method 请求方法 e.g: post
- * @param {...Middleware[]} middleware 中间件
+ * @param {OPTIONS} options 可选参数 log是否打印返回值日志 middleware 中间件
  * @returns
  */
-export function Request(url: string, method: Methods, log4: boolean = true, ...middleware: Middleware[]) {
+export function Request(url: string, method: Methods, options: OPTIONS = { log: true, middleware: [] }) {
   return (target: any, name: string, descriptor: PropertyDescriptor) => {
     const fn = descriptor.value;
+    const middlewareArray = options.middleware || [];
     descriptor.value = (router: any) => {
-      router[method](url, ...middleware, async (ctx: Koa.Context, next: Koa.Next) => {
+      router[method](url, ...middlewareArray, async (ctx: Koa.Context, next: Koa.Next) => {
         await fn(ctx, next);
         // 记录返回值
-        if (log4) {
-          LOG4.http.trace('返回值:', ctx.body);
+        if (options.log) {
+          LOG4.http.trace('请求连接-->', ctx.path, '返回值:', JSON.stringify(ctx.body));
         }
       });
     };
