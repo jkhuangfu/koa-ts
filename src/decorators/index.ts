@@ -35,7 +35,7 @@ export function Request(url: string, method: Methods, options: OPTIONS = { log: 
         await fn(ctx, next);
         // 记录返回值
         if (options.log) {
-          LOG4.http.trace('请求连接-->', ctx.path, '返回值:', JSON.stringify(ctx.body));
+          LOG4.http.trace(`请求连接:${ctx.path}, 传递参数:${JSON.stringify(getParams(ctx))},返回值:${JSON.stringify(ctx.body)}`);
         }
       });
     };
