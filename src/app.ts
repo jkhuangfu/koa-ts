@@ -22,7 +22,11 @@ import io from '@/controllers/socket/socket-io';
     .use(middleware.trace)
     .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
     .use(koaStatic(path.join(__dirname, 'public')))
-    .use(helmet())
+    .use(
+      helmet({
+        contentSecurityPolicy: false
+      })
+    )
     .use(middleware.koaBody)
     .use(middleware.koaSession(app))
     .use(middleware.koaCors)

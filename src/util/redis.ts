@@ -2,8 +2,8 @@ import * as redis from 'redis';
 import { configDev, configProd } from '@/config/redis';
 
 const { NODE_ENV } = process.env;
-const { ip, port } = NODE_ENV === 'development' ? configDev : configProd;
-const client: redis.RedisClient = redis.createClient(port, ip);
+const { ip, port, password } = NODE_ENV === 'development' ? configDev : configProd;
+const client: redis.RedisClient = redis.createClient(port, ip, password ? { password } : {});
 client.on('error', (err: Error) => {
   LOG4.app.error('redis error：' + err);
   process.exit(1);
