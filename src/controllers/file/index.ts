@@ -6,10 +6,7 @@ interface FileObj {
   [key: string]: any;
 }
 
-const UPLOAD_PATH: string = path.join(
-  process.cwd(),
-  process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/'
-);
+const UPLOAD_PATH: string = path.join(process.cwd(), process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/');
 
 class FileController {
   public async MultiFile(ctx: Koa.Context) {
@@ -24,7 +21,7 @@ class FileController {
     });
     reader.map((item, idx) => {
       promise.push(
-        new Promise((resolve: (value?: boolean | PromiseLike<boolean> | undefined) => void) => {
+        new Promise<boolean>(resolve => {
           item.pipe(upStream[idx]);
           item.on('end', () => {
             resolve(true);
@@ -40,7 +37,7 @@ class FileController {
     return false;
   }
   public SingleFile(ctx: Koa.Context) {
-    return new Promise((resolve: (value?: boolean | PromiseLike<boolean> | undefined) => void) => {
+    return new Promise<boolean>(resolve => {
       const { file } = ctx.request.files as any;
       // 创建可读流
       const reader = fs.createReadStream(file.path);
@@ -49,10 +46,10 @@ class FileController {
       const upStream = fs.createWriteStream(filePath);
       // 可读流通过管道写入可写流
       reader.pipe(upStream);
-      reader.on('end', async () => {
+      reader.on('end', () => {
         resolve(true);
       });
-      reader.on('error', async () => {
+      reader.on('error', () => {
         resolve(false);
       });
     });
