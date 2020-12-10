@@ -6,10 +6,7 @@ interface FileObj {
   [key: string]: any;
 }
 
-const UPLOAD_PATH: string = path.join(
-  process.cwd(),
-  process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/'
-);
+const UPLOAD_PATH: string = path.join(process.cwd(), process.env.NODE_ENV === 'development' ? '/src/upload/' : '/build/upload/');
 
 class FileController {
   public async MultiFile(ctx: Koa.Context) {
@@ -24,7 +21,7 @@ class FileController {
     });
     reader.map((item, idx) => {
       promise.push(
-        new Promise((resolve: (value?: boolean | PromiseLike<boolean> | undefined) => void) => {
+        new Promise<boolean>(resolve => {
           item.pipe(upStream[idx]);
           item.on('end', () => {
             resolve(true);
