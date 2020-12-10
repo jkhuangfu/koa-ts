@@ -39,6 +39,7 @@ Log4js.configure({
     }
   },
   pm2: true,
+  disableClustering: true,
   categories: {
     default: { appenders: ['stdout'], level: 'all' },
     app: { appenders: ['stdout', 'app'], level: 'all' },

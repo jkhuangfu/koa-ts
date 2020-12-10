@@ -9,6 +9,6 @@ export const mysqlOnline = {
   host: '127.0.0.1',
   user: 'root',
   password: 'Huangfu@1993!',
-  database: 'blog',
+  database: 'data',
   port: 3306
 };
