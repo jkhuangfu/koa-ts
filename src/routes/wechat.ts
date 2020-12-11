@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import { reply, Signature, openid } from '@/controllers/wechat';
+import { reply, Signature, openid, getSessionKey, wxbizDataCrypt } from '@/controllers/wechat';
 import { Controller, Request } from '@/decorators';
 
 // 微信服务接口加密校验
@@ -39,5 +39,15 @@ export default class Wechat {
       const replyMessageXml = await reply(ctx);
       ctx.body = replyMessageXml;
     }
+  }
+  @Request('/getUserPhone', 'post')
+  async handleWxUserInfo(ctx: Koa.Context) {
+    // TODO 异常处理
+    const { appid, encryptedData, iv } = getParams(ctx);
+    const data = (await getSessionKey(ctx)) as any;
+    const crypt = new wxbizDataCrypt(appid, data.session_key, encryptedData, iv);
+    const phoneResult = crypt.decryptData();
+    LOG4.http.info('微信用户手机号：', phoneResult.phoneNumber);
+    response(ctx, 200, { data: phoneResult.phoneNumber });
   }
 }
