@@ -3,10 +3,14 @@
   <head>
     <title>测试demo222</title>
     <!--socket.io-->
-    <script src="https://cdn.bootcss.com/socket.io/2.1.1/socket.io.js"></script>
+    <script
+      crossorigin="anonymous"
+      integrity="sha512-tXH7Av8en7+/hg0XwBppaCDPmpJhUXbZ+j7lNC4y+ZQpmCZQcgQN6RjkM7Irj1MUW7bZengfuTOqR4RzCC4bnA=="
+      src="https://lib.baomitu.com/socket.io/3.1.1/socket.io.min.js"
+    ></script>
   </head>
   <body>
-    <h1 style="text-align: center;"><%= title %></h1>
+    <h1 style="text-align: center"><%= title %></h1>
     <hr />
     <button onclick="a()">点击测试</button>
     <ul id="ultext"></ul>
@@ -15,14 +19,14 @@
     document.getElementById('ultext').innerHTML = window.history.length;
 
     const id = location.search;
-    var socket = io.connect('ws://localhost:3330/socket?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
+    var socket = io.connect('ws://127.0.0.1:3330/socket?roomId=' + id.split('=')[1]); // 括号内参数为scoket服务器，若页面和其是同一服务则可省略
     function a() {
       /**
        * emit 向服务端发送信息
        * post 为服务端自定义的事件名称
        * 123456 为传递的内容
        * */
-      let s = { data: '11111', method: 'handleMessage' };
+      let s = { data: '11111' + new Date().toLocaleString(), method: 'handleMessage' };
       socket.emit('post', s);
     }
     /**

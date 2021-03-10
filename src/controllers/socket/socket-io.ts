@@ -1,10 +1,10 @@
-import * as io from 'socket.io';
+import { Server as io, Socket } from 'socket.io';
 import { Server } from 'http';
-import Socket from './controllers';
+import SocketC from './controllers';
 
 export default (server: Server) => {
-  const ws = io(server).of('/socket');
-  ws.on('connection', async (socket: io.Socket) => {
+  const ws = new io(server).of('/socket');
+  ws.on('connect', async (socket: Socket) => {
     // const { roomId = 'default' } = url.parse(socket.request.url, true).query;
     // // 从redis中获取所有房间
     // const redisRooms = await redisDb.get('socket_rooms');
@@ -21,7 +21,7 @@ export default (server: Server) => {
     //   console.log(roomId, '---加入房间---test');
     // });
     socket.on('post', (arg: { data: any; method: string }) => {
-      Socket[arg.method](arg.data, socket);
+      SocketC[arg.method](arg.data, socket);
     });
     socket.on('disconnect', () => {
       // 这里监听 disconnect，就可以知道谁断开连接了
