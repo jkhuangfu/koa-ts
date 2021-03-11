@@ -29,6 +29,7 @@ export const getUserInfoByTmpAuthCode = async (ctx: Koa.Context) => {
  */
 export const getAccessToken = async () => {
   const requestUrl = 'https://oapi.dingtalk.com/gettoken';
+  console.log(appkey);
   const data: any = await $http.get(requestUrl, { params: { appkey, appsecret } });
   LOG4.http.info('获取access_tokeen', JSON.stringify(data));
   const { access_token } = data;
@@ -69,4 +70,31 @@ export const getUserDetailByUserid = async (ctx: Koa.Context) => {
   LOG4.http.debug('根据userid获取用户信息', JSON.stringify(data));
 
   // console.log(data);
+};
+
+/**
+ * @API https://developers.dingtalk.com/document/app/custom-robot-access/title-zob-eyu-qse
+ * @description 自定义机器人进行发送消息
+ * @return 钉钉反馈的结果
+ */
+export const sendMessageByRobot = async (ctx: Koa.Context) => {
+  // 创建机器人时所反馈的webhook链接
+  const webhook = 'https://oapi.dingtalk.com/robot/send?access_token=XXX';
+  const template = {
+    msgtype: 'text',
+    text: {
+      content: '测试内容'
+    },
+    at: {
+      atMobiles: [],
+      isAtAll: true
+    }
+  };
+  // 此处创建机器人安全模式选择加签形式反馈的secretkey
+  const secretkey = 'XXX';
+  const timestap = Date.now();
+  // 进行加签校验
+  const sign = encryption.hmac(timestap + '\n' + secretkey, 'sha256', secretkey);
+  const result = await $http.post(webhook + `&timestamp=${timestap}&sign=${sign}`, template);
+  ctx.body = result;
 };

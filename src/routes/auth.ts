@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import { Controller, Request } from '@/decorators';
 import github from '@/controllers/oauth/github';
 import baidu from '@/controllers/oauth/baidu';
-// import ding from '@/controllers/oauth/ding';
+import { sendMessageByRobot } from '@/controllers/oauth/ding';
 
 @Controller('/oauth')
 export default class Oauth {
@@ -15,8 +15,8 @@ export default class Oauth {
     await baidu(ctx);
   }
 
-  // @Request('/ding', 'get')
-  // async dingOuath(ctx: Koa.Context) {
-  //   await ding(ctx);
-  // }
+  @Request('/ding/robot', 'get')
+  async dingOuath(ctx: Koa.Context) {
+    await sendMessageByRobot(ctx);
+  }
 }
