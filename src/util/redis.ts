@@ -1,3 +1,4 @@
+import { reply } from '@/controllers/wechat';
 import * as redis from 'redis';
 import { configDev, configProd } from '@/config/redis';
 
@@ -13,6 +14,28 @@ client.on('connect', () => {
 });
 
 export default class RedisDb {
+  /**
+   * @description 设置键值对(原子性操作)
+   * @param {string} key 键
+   * @param {any} value 值
+   * @param expire 过期时间（单位：秒，可为空，为空则不过期）
+   * @return 0 代表插入成功 1 代表已经存在该key值
+   */
+  public static setnx(key: string, value: any, expire?: number): Promise<number | Error> {
+    return new Promise((resolve: (value: number | Error) => void) => {
+      client.setnx(key, value, (err: Error | null, replay: number) => {
+        if (err) {
+          LOG4.http.error('redis插入(setnx)失败：' + err);
+          return resolve(err);
+        }
+        if (expire && expire > 0) {
+          client.expire(key, expire);
+        }
+        resolve(replay);
+      });
+    });
+  }
+
   /**
    * @description 设置键值对
    * @param {string} key 键

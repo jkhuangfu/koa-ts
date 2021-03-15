@@ -41,6 +41,15 @@ declare global {
 
   class redisDb {
     /**
+     * @description 设置键值对(原子性操作)
+     * @param {string} key 键
+     * @param {any} value 值
+     * @param expire 过期时间（单位：秒，可为空，为空则不过期）
+     * @return 0 代表插入成功 1 代表已经存在该key值
+     */
+    public static setnx(key: string, value: any, expire?: number): Promise<number | Error>;
+
+    /**
      * @description 设置键值对
      * @param {string} key 键
      * @param {any} value 值
