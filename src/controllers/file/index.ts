@@ -1,7 +1,6 @@
 import * as Koa from 'koa';
 import * as fs from 'fs';
 import * as path from 'path';
-import model from '@/models/file';
 interface FileObj {
   [key: string]: any;
 }
@@ -53,10 +52,6 @@ class FileController {
         resolve(false);
       });
     });
-  }
-  public async query(ctx: Koa.Context) {
-    const params = ctx.request.body.name;
-    return await model.queryByTitle(params);
   }
 }
 

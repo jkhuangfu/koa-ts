@@ -9,7 +9,6 @@ import { globInit } from '@/util';
 import middleware from '@/middleware';
 import io from '@/controllers/socket/socket-io';
 // import '@/bull';
-// import './mongoose';
 
 (async () => {
   const app = new Koa();

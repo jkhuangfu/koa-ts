@@ -1,4 +1,3 @@
-import { reply } from '@/controllers/wechat';
 import * as redis from 'redis';
 import { configDev, configProd } from '@/config/redis';
 

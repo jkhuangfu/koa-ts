@@ -15,10 +15,4 @@ export default class File {
     const res = await FileController.SingleFile(ctx);
     response(ctx, res ? 200 : 500);
   }
-
-  @Request('/query', 'post')
-  async query(ctx: Koa.Context) {
-    const res = await FileController.query(ctx);
-    response(ctx, res ? 200 : 500);
-  }
 }
