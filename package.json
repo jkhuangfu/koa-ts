@@ -20,7 +20,8 @@
     "dev": "cross-env NODE_ENV=development ts-node-dev --transpile-only src/app.ts",
     "debug": "cross-env NODE_ENV=production ts-node-dev --transpile-only src/app.ts",
     "lint": "tslint --project tsconfig.json --config tslint.json",
-    "fix": "tslint --fix -c tslint.json ./src/**/*.ts"
+    "fix": "tslint --fix -c tslint.json ./src/**/*.ts",
+    "update": "./node_modules/.bin/yarn-upgrade-all"
   },
   "keywords": [
     "koa2",
@@ -28,8 +29,6 @@
     "redis",
     "mysql",
     "session",
-    "mongoose",
-    "mongodb",
     "jsonwentoken",
     "log4js",
     "soccket"
@@ -38,7 +37,7 @@
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "adm-zip": "^0.5.3",
+    "adm-zip": "^0.5.4",
     "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
     "bull": "^3.20.1",
@@ -50,17 +49,17 @@
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
-    "koa-helmet": "^6.0.0",
+    "koa-helmet": "^6.1.0",
     "koa-router": "^10.0.0",
     "koa-session": "^6.1.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.3.1",
+    "koa-views": "^7.0.1",
     "log4js": "^6.3.0",
     "module-alias": "^2.2.2",
     "mysql": "^2.18.1",
-    "nodemailer": "^6.4.18",
+    "nodemailer": "^6.5.0",
     "redis": "^3.0.2",
-    "socket.io": "^3.1.1",
+    "socket.io": "^4.0.0",
     "sqlite3": "^5.0.2",
     "svg-captcha": "^1.4.0",
     "uuid": "^8.3.2",
@@ -71,7 +70,7 @@
     "@types/adm-zip": "^0.4.33",
     "@types/ali-oss": "^6.0.7",
     "@types/bull": "^3.15.0",
-    "@types/cheerio": "^0.22.24",
+    "@types/cheerio": "^0.22.27",
     "@types/ejs": "^3.0.6",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/koa-helmet": "^6.0.2",
@@ -81,20 +80,24 @@
     "@types/koa-views": "^2.0.4",
     "@types/koa__cors": "^3.0.2",
     "@types/module-alias": "^2.0.0",
-    "@types/mysql": "^2.15.17",
-    "@types/node": "^14.14.31",
-    "@types/nodemailer": "^6.4.0",
+    "@types/mysql": "^2.15.18",
+    "@types/node": "^14.14.35",
+    "@types/nodemailer": "^6.4.1",
     "@types/redis": "^2.8.28",
     "@types/socket.io": "^2.1.13",
     "@types/uuid": "^8.3.0",
-    "@types/websocket": "^1.0.1",
+    "@types/websocket": "^1.0.2",
     "@types/xml2js": "^0.4.8",
     "rimraf": "^3.0.2",
-    "ts-node-dev": "^1.1.2",
-    "tslint": "^6.1.2",
-    "typescript": "^4.2.2"
+    "ts-node-dev": "^1.1.6",
+    "tslint": "^6.1.3",
+    "typescript": "^4.2.3",
+    "yarn-upgrade-all": "^0.5.4"
   },
   "_moduleAliases": {
     "@": "src"
+  },
+  "yarn-upgrade-all": {
+    "ignore": []
   }
 }
