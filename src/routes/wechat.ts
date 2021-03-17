@@ -42,7 +42,6 @@ export default class Wechat {
   }
   @Request('/getUserPhone', 'post')
   async handleWxUserInfo(ctx: Koa.Context) {
-    // TODO 异常处理
     const { appid, encryptedData, iv } = getParams(ctx);
     const data = (await getSessionKey(ctx)) as any;
     const crypt = new wxbizDataCrypt(appid, data.session_key, encryptedData, iv);
