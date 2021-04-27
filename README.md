@@ -31,4 +31,4 @@
 
 ### Visitors Count
 
-<img align="left" src = "https://profile-counter.glitch.me/jkhuangfu/koa-ts/count.svg" alt ="Loading">
+<img align="left" src = "https://profile-counter.glitch.me/jkhuangfu-koa-ts/count.svg" alt ="Loading">
