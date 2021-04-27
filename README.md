@@ -28,3 +28,7 @@
 
 4、npm run start || yarn start (需要全局安装pm2 npm i -g pm2)
 ```
+
+### Visitors Count
+
+<img align="left" src = "https://profile-counter.glitch.me/flutter_ecommerce_app/count.svg" alt ="Loading">
