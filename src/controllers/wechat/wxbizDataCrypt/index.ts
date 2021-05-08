@@ -18,7 +18,7 @@ export default class WxBizDataCrypt {
 
   public decryptData() {
     const sessionKey = Buffer.from(this.sessionKey, 'base64');
-    const encryptedDataBuffer = Buffer.from(this.encryptedData, 'base64');
+    const encryptedDataBuffer = Buffer.from(this.encryptedData, 'base64').toString();
     const ivBuffer = Buffer.from(this.iv, 'base64');
     let decoded: any;
     try {

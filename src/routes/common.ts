@@ -61,23 +61,4 @@ export default class Common {
       ctx.body = fs.createReadStream(path);
     }
   }
-
-  @Request('/tt', 'get')
-  async tool(ctx: Koa.Context) {
-    const data = await fs.readFileSync('/Users/huangfu/Desktop/t.txt');
-    const arr = data.toString().split('\n');
-    const res: any = [];
-    let insert: string = 'INSERT INTO  tb_tv (tv_name,tv_url,is_hd,role) values ';
-
-    arr.map((item: any, index: number) => {
-      res.push({
-        name: item.split(',')[0],
-        url: item.split(',')[1],
-        type: 3
-      });
-      insert += `('${item.split(',')[0]}','${item.split(',')[1]}','2','1')${index < arr.length - 1 ? ',' : ''}`;
-    });
-    const d = await DB.handle(insert, []);
-    response(ctx, 200, { data: null }, '1');
-  }
 }

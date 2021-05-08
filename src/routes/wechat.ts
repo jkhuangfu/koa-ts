@@ -3,7 +3,7 @@ import { reply, Signature, openid, getSessionKey, wxbizDataCrypt } from '@/contr
 import { Controller, Request } from '@/decorators';
 
 // 微信服务接口加密校验
-const getSignature = (timestamp: Date, nonce: string, token: string) => {
+const getSignature = (timestamp: string | string[], nonce: string | string[], token: string | string[]) => {
   const arr = [token, timestamp, nonce].sort();
   return encryption.hash(arr.join(''), 'sha1');
 };
@@ -24,7 +24,7 @@ export default class Wechat {
   async wxServer(ctx: Koa.Context) {
     const { method } = ctx;
     const token = 'wx_token';
-    const { signature, echostr, timestamp, nonce } = ctx.query;
+    const { signature, echostr, timestamp = '', nonce = '' } = ctx.query;
     const crypto = getSignature(timestamp, nonce, token);
     if (method === 'GET') {
       // 此处进行微信token验证
