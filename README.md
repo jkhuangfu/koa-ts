@@ -2,22 +2,22 @@
 
 > node koa2 typescript
 
-### 个人学写
+## 个人学写
 
-> 包含技术栈：koa2、typescript、 jsonwebtoken、 redis、 mongoose、 mysql、 log4js、 session、socket.io、oauth
+> 包含技术栈：koa2、typescript、 jsonwebtoken、 redis、 mysql、 log4js、 session、socket.io、oauth
 
-### 启动需要的 DB 支持
+## 启动需要的 DB 服务 支持
 
-> mysql(5.7) redis mongodb(目前代码注释了链接，可不安装)
+> mysql(5.7) redis
 
-### Start
+## Start
 
 ```
  1、安装依赖 yarn
  2、启动项目 npm run dev 或 yarn dev
 ```
 
-### Build
+## Build
 
 ```
 1、npm run build 或 yarn build
