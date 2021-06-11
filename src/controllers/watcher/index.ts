@@ -5,8 +5,8 @@ import * as AdmZip from 'adm-zip';
 let ready: boolean = false;
 const WATCH_PATH: string = path.join(process.cwd(), '/src/upload/');
 // 创建上传目录
-fs.stat(WATCH_PATH, exists => {
-  if (!exists) fs.mkdirSync(WATCH_PATH);
+fs.stat(WATCH_PATH, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
+  if (!stats && !err) fs.mkdirSync(WATCH_PATH);
 });
 
 // 检测上传目录并进行解压
