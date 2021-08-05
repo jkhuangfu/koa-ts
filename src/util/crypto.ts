@@ -25,4 +25,40 @@ export default class Encryption {
     hmac.update(content);
     return hmac.digest('base64');
   }
+
+  /**
+   * aes对称 解密
+   * @param dataStr 解密对象 {string}
+   * @param key 加密秘钥{string}
+   * @param iv 偏移量{string}
+   * @return {string|boolean} 解密结果
+   */
+  public static decipher(dataStr: string, key: string, iv: string): string | boolean {
+    try {
+      const cipherChunks = [];
+      const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+      decipher.setAutoPadding(true);
+      cipherChunks.push(decipher.update(dataStr, 'base64', 'utf8'));
+      cipherChunks.push(decipher.final('utf8'));
+      return cipherChunks.join('');
+    } catch (e) {
+      LOG4.app.error('解密失败：', e);
+      return false;
+    }
+  }
+  /**
+   * aes对称 加密
+   * @param dataStr 加密内容 {string}
+   * @param key 加密秘钥{string}
+   * @param iv 偏移量{string}
+   * @return {string}
+   */
+  public static cipher(dataStr: string, key: string, iv: string): string {
+    const cipherChunks = [];
+    const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+    cipher.setAutoPadding(true);
+    cipherChunks.push(cipher.update(dataStr, 'utf8', 'base64'));
+    cipherChunks.push(cipher.final('base64'));
+    return cipherChunks.join('');
+  }
 }

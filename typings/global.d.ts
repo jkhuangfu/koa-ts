@@ -27,6 +27,22 @@ declare global {
      * @return {string} 加密后的值
      */
     static hmac(content: string, type: string, secretkey: string): string;
+    /**
+     * aes对称 加密
+     * @param dataStr 加密内容{string}
+     * @param key 加密秘钥{string}
+     * @param iv 偏移量{string}
+     * @return {string} 加密后的值
+     */
+    static cipher(dataStr: string, key: string, iv: string): string;
+    /**
+     * aes对称 解密
+     * @param dataStr  {string} 解密对象
+     * @param key 加密秘钥 {string}
+     * @param iv 偏移量 {string}
+     * @return {string|boolean} 解密结果(boolean值为解密失败false)
+     */
+    static decipher(dataStr: string, key: string, iv: string): string | boolean;
   }
 
   class DB {
