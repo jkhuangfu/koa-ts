@@ -1,5 +1,5 @@
 import * as KoaRouter from 'koa-router';
-import * as Koa from 'koa';
+import type * as Koa from 'koa';
 import jwtCheck from '@/middleware/checklogin';
 type Middleware = (ctx: Koa.Context, next: Koa.Next) => void;
 

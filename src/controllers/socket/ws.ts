@@ -1,4 +1,4 @@
-import { server, IMessage, request } from 'websocket';
+import { server, Message, request } from 'websocket';
 export default (app: any) => {
   const wsServer = new server({
     httpServer: app,
@@ -27,7 +27,7 @@ export default (app: any) => {
 
     const connection = req.accept('huangfu', req.origin);
     // console.log(new Date() + ' Connection accepted.');
-    connection.on('message', (message: IMessage) => {
+    connection.on('message', (message: Message) => {
       console.log(JSON.parse(JSON.stringify(message)));
       if (message.type === 'utf8') {
         // @ts-ignore

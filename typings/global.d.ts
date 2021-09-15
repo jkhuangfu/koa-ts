@@ -1,8 +1,8 @@
 /// <reference types="node" />
-import { MysqlError } from 'mysql';
-import * as Koa from 'koa';
-import { AxiosInstance } from 'axios';
-import * as Log4js from 'log4js';
+import type { MysqlError } from 'mysql';
+import type * as Koa from 'koa';
+import type { AxiosInstance } from 'axios';
+import type * as Log4js from 'log4js';
 
 declare global {
   interface LOG4METHODS {
