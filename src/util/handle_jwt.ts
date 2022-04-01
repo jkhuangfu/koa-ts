@@ -1,6 +1,4 @@
 import * as jwt from 'jsonwebtoken';
-import { resolve } from 'path';
-
 export default class JWT {
   /**
    * @description  token生成方法

@@ -16,6 +16,7 @@ import io from '@/controllers/socket/socket-io';
   app.keys = ['W@7712duagdb6hddhgW!'];
   await globInit();
   io(server);
+
   app
     .use(middleware.timeout)
     .use(middleware.trace)

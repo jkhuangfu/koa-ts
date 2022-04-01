@@ -1,4 +1,4 @@
-import * as Koa from 'koa';
+import type * as Koa from 'koa';
 import * as Route from 'koa-router';
 import routeSource from '@/routes';
 

@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as chokidar from 'chokidar';
+
 import * as AdmZip from 'adm-zip';
 let ready: boolean = false;
 const WATCH_PATH: string = path.join(process.cwd(), '/src/upload/');

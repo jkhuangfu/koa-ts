@@ -61,11 +61,7 @@ export function Controller(prefix: string = ''): any {
   return (target: ClassDecorator) => {
     const fnList = Object.getOwnPropertyDescriptors(target.prototype);
     for (const v in fnList) {
-      // 排除类的构造方法
-      if (v !== 'constructor') {
-        const fn = fnList[v].value;
-        fn(router);
-      }
+      if (v !== 'constructor') fnList[v].value(router);
     }
     return router.routes();
   };
