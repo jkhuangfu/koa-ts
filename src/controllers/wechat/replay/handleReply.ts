@@ -8,7 +8,7 @@ const createRandom = (num: number) => {
   return res;
 };
 const handleReply = async (xmlJson: any) => {
-  const { MsgType, Content, FromUserName, Event } = xmlJson;
+  const { MsgType, Content, FromUserName, Event, Recognition } = xmlJson;
   let content = null;
   if (MsgType === 'text') {
     if (Content.indexOf('获取令牌') === 0 && authId.includes(FromUserName)) {
@@ -23,6 +23,8 @@ const handleReply = async (xmlJson: any) => {
     if (Event === 'subscribe') {
       content = '终于等到你，还好我没放弃!';
     }
+  } else if (MsgType === 'voice' && authId.includes(FromUserName)) {
+    content = `语音识别到的信息为---->${Recognition}`;
   } else {
     LOG4.http.info('不支持的微信接收信息', MsgType);
     content = '暂不支持该类型信息~';

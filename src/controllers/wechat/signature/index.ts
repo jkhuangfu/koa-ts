@@ -1,6 +1,5 @@
 import * as Koa from 'koa';
-import ticket from './ticket';
-import token from './token';
+import { getToken, getTicket } from '../utils';
 import wechatConfig from '@/config/wechat';
 const { APP_ID, APP_SECRET } = wechatConfig;
 
@@ -25,8 +24,8 @@ export default async (ctx: Koa.Context) => {
       response(ctx, 200, { data });
     } else {
       LOG4.http.info('缓存中没有token和jsapi_ticket');
-      const TOKEN = await token(APP_ID, APP_SECRET);
-      const jsapiTicket = await ticket(TOKEN);
+      const TOKEN = await getToken(APP_ID, APP_SECRET);
+      const jsapiTicket = await getTicket(TOKEN);
       const str = `jsapi_ticket=${jsapiTicket}&noncestr=${NONCT_STR}&timestamp=${timestamp}&url=${decodeURIComponent(url)}`;
       const signature = encryption.hash(str, 'sha1');
       const data = {

@@ -1,4 +1,4 @@
-export default async (token: string) => {
+export const getTicket = async (token: string) => {
   LOG4.http.info('===获取ticket====token=>' + token);
   const url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${token}&type=jsapi`;
   const response = await $http.get(url);
