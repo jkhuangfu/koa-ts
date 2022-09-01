@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import { getToken, getTicket } from '../utils';
 import wechatConfig from '@/config/wechat';
+import { encryption, getParams, LOG4, redis, response } from '@/util';
 const { APP_ID, APP_SECRET } = wechatConfig;
 
 export default async (ctx: Koa.Context) => {
@@ -8,8 +9,8 @@ export default async (ctx: Koa.Context) => {
     const { url } = getParams(ctx);
     const NONCT_STR = 'W6@jsgfh!qeJ';
     const timestamp = Math.floor(Date.now() / 1000); // 时间戳
-    const CACHE_TOKEN = await redisDb.get('access_token');
-    const CACHE_TICKET = await redisDb.get('jsapi_ticket');
+    const CACHE_TOKEN = await redis.get('access_token');
+    const CACHE_TICKET = await redis.get('jsapi_ticket');
     if (CACHE_TOKEN && CACHE_TICKET) {
       // 缓存中有token和jsapi_ticket
       LOG4.http.info('缓存中有token和jsapi_ticket');

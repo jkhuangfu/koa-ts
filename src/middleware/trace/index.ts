@@ -1,3 +1,4 @@
+import { LOG4 } from '@/util';
 import * as Koa from 'koa';
 // 处理错误信息,发送错误码,记录请求耗时
 export default async (ctx: Koa.Context, next: Koa.Next) => {

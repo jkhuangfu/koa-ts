@@ -3,6 +3,7 @@ import * as Koa from 'koa';
 import { parseXML } from '../utils';
 import wx_xml_template from './template';
 import handleReply from './handleReply';
+import { getParams, LOG4 } from '@/util';
 
 // 接收消息 返回 JSON对象
 const getXML = async (ctx: Koa.Context) => {

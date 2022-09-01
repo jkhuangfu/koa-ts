@@ -1,6 +1,7 @@
 import * as KoaRouter from 'koa-router';
 import type * as Koa from 'koa';
 import jwtCheck from '@/middleware/checklogin';
+import { LOG4, getParams } from '@/util';
 type Middleware = (ctx: Koa.Context, next: Koa.Next) => void;
 
 enum RequestMethod {

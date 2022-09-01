@@ -1,17 +1,26 @@
 import * as jwt from 'jsonwebtoken';
-export default class JWT {
+import LOG4 from './log4js';
+
+interface JsonWebToken {
   /**
    * @description  token生成方法
    * @param {string | object | Buffer} value 加密对象
    * @param {string} [secret='^@q676V_8&2'] token加密秘钥
-   * @param {string} [expires='7 days'] 生成的token有效期
-   * @return {string | boolean} 返回Promise对象(生成的token 失败返回false)
+   * @param {string} [expires='7 days'] 生成的token有效期默认一周
+   * @return {string | boolean | undefined} 返回Promise对象(生成的token 失败返回false)
    */
-  public static async generate(
-    value: string | object | Buffer,
-    secret: string = '^@q676V_8&2',
-    expires: string = '7 days'
-  ): Promise<string | boolean | undefined> {
+  generate: (value: string | object | Buffer, secret?: string, expires?: string) => Promise<string | boolean | undefined>;
+  /**
+   * @description  验证token是否有效的方法
+   * @param {string} token 需要验证的token
+   * @param {string} [secret='^@q676V_8&2'] token加密秘钥
+   * @return {object | string | boolean | undefined} 返回Promise对象(token解密成功的值,失败返回false)
+   */
+  verify: (token: string, secret?: string) => Promise<object | string | boolean | undefined>;
+}
+
+export class JsonWebTokenImpl implements JsonWebToken {
+  async generate(value: string | object | Buffer, secret: string = '^@q676V_8&2', expires: string = '7 days'): Promise<string | boolean | undefined> {
     try {
       return new Promise((res: (value: string | boolean | undefined) => void) => {
         jwt.sign(value, secret, { expiresIn: expires }, (e, encode) => {
@@ -26,13 +35,8 @@ export default class JWT {
       return false;
     }
   }
-  /**
-   * @description  验证token是否有效的方法
-   * @param {string} token 需要验证的token
-   * @param {string} [secret='^@q676V_8&2'] token加密秘钥
-   * @return {object | string | boolean} 返回Promise对象(token解密成功的值,失败返回false)
-   */
-  public static async verify(token: string, secret: string = '^@q676V_8&2'): Promise<object | string | boolean | undefined> {
+
+  async verify(token: string, secret: string = '^@q676V_8&2'): Promise<object | string | boolean | undefined> {
     try {
       return new Promise((res: (value: object | string | boolean | undefined) => void) => {
         jwt.verify(token, secret, (error, result) => {
@@ -48,3 +52,5 @@ export default class JWT {
     }
   }
 }
+
+export default new JsonWebTokenImpl();

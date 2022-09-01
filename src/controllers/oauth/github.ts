@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import axios from 'axios';
 import { dev, prod } from '@/config/auth';
+import { getParams, LOG4, response } from '@/util';
 
 const { NODE_ENV } = process.env;
 const {
@@ -14,11 +15,7 @@ const github = async (ctx: Koa.Context) => {
   try {
     const tokenResponse = await axios({
       method: 'post',
-      url:
-        'https://github.com/login/oauth/access_token?' +
-        `client_id=${clientID}&` +
-        `client_secret=${clientSecret}&` +
-        `code=${requestCode}`,
+      url: 'https://github.com/login/oauth/access_token?' + `client_id=${clientID}&` + `client_secret=${clientSecret}&` + `code=${requestCode}`,
       headers: {
         accept: 'application/json'
       }

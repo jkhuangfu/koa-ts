@@ -1,3 +1,4 @@
+import { LOG4 } from '@/util';
 import * as Queue from 'bull';
 const queue = new Queue('huang', 'redis://127.0.0.1:6379');
 queue.on('global:progress', (jobId, progress) => {

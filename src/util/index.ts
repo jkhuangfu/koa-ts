@@ -1,14 +1,24 @@
-import encryption from './crypto';
-import DB from './dataquery';
+import encryption, { EncryptionImpl } from './crypto';
+import Mysql, { MysqlImpl } from './dataquery';
 import LOG4 from './log4js';
-import redisDb from './redis';
+import redis, { RedisDbImpl } from './redis';
 import response from './response';
-import Session from './session';
-import JWT from './handle_jwt';
+import Session, { SessionImpl } from './session';
+import JsonWebToken, { JsonWebTokenImpl } from './handle_jwt';
 import $http from './http';
 import getParams from './getParams';
-export const globInit = () => {
-  // global挂载全局方法
-  Object.assign(global, { encryption, DB, LOG4, redisDb, response, Session, JWT, $http, getParams });
-  return Promise.resolve();
+export {
+  encryption,
+  EncryptionImpl,
+  Mysql,
+  MysqlImpl,
+  LOG4,
+  redis,
+  RedisDbImpl,
+  response,
+  Session,
+  JsonWebToken,
+  JsonWebTokenImpl,
+  $http,
+  getParams
 };

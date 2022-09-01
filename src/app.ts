@@ -5,39 +5,36 @@ import * as path from 'path';
 import * as views from 'koa-views';
 import * as koaStatic from 'koa-static';
 import * as helmet from 'koa-helmet';
-import { globInit } from '@/util';
 import middleware from '@/middleware';
 import io from '@/controllers/socket/socket-io';
+import { LOG4 } from '@/util';
 // import '@/bull';
 
 // import qpdf from 'node-qpdf2';
 
-(async () => {
-  const app = new Koa();
-  const server = http.createServer(app.callback());
-  app.keys = ['W@7712duagdb6hddhgW!'];
-  await globInit();
-  io(server);
+const app = new Koa();
+const server = http.createServer(app.callback());
+app.keys = ['W@7712duagdb6hddhgW!'];
+io(server);
 
-  app
-    .use(middleware.timeout)
-    .use(middleware.trace)
-    .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
-    .use(koaStatic(path.join(__dirname, 'public')))
-    .use(
-      helmet({
-        contentSecurityPolicy: false
-      })
-    )
-    .use(middleware.koaBody)
-    .use(middleware.koaSession(app))
-    .use(middleware.koaCors)
-    .use(middleware.router.routes())
-    .use(middleware.router.allowedMethods())
-    .on('error', (err: Error) => {
-      LOG4.app.error(err);
-    });
-  server.listen(3330, () => {
-    LOG4.app.info('server is running at port 3330');
+app
+  .use(middleware.timeout)
+  .use(middleware.trace)
+  .use(views(path.join(__dirname, 'views'), { extension: 'ejs' }))
+  .use(koaStatic(path.join(__dirname, 'public')))
+  .use(
+    helmet({
+      contentSecurityPolicy: false
+    })
+  )
+  .use(middleware.koaBody)
+  .use(middleware.koaSession(app))
+  .use(middleware.koaCors)
+  .use(middleware.router.routes())
+  .use(middleware.router.allowedMethods())
+  .on('error', (err: Error) => {
+    LOG4.app.error(err);
   });
-})();
+server.listen(3330, () => {
+  LOG4.app.info('server is running at port 3330');
+});

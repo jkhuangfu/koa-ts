@@ -1,3 +1,5 @@
+import { redis, LOG4 } from '@/util';
+
 const authId = ['ox5xSuH5ZNfa0AFt5XdB7pFriEM0', 'ox5xSuEo5joUlCN2_tA2FFZ48Qu4'];
 const createRandom = (num: number) => {
   const str = '23QWERTYUPASDFGHJKLZXCVBNM456789zxcvbnmasdfghjkqwertyup';
@@ -13,7 +15,7 @@ const handleReply = async (xmlJson: any) => {
   if (MsgType === 'text') {
     if (Content.indexOf('获取令牌') === 0 && authId.includes(FromUserName)) {
       const code: string = createRandom(4);
-      await redisDb.set(FromUserName + '_code', code, 5 * 60);
+      await redis.set(FromUserName + '_code', code, 5 * 60);
       content = '您的令牌验证码是:【' + code + '】,5分钟有效哦~';
     } else {
       content = '你说的我还不懂哦~';

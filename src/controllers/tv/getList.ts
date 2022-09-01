@@ -1,15 +1,16 @@
 import * as Koa from 'koa';
+import { JsonWebToken, Mysql, response } from '@/util';
 
 const getTvList = async (ctx: Koa.Context) => {
   const { authorization } = ctx.header;
-  const user = authorization && (await JWT.verify(authorization.replace(/\"/g, '')));
+  const user = authorization && (await JsonWebToken.verify(authorization.replace(/\"/g, '')));
   let role: number = 0;
   if (user) {
     // 非VIP
     role = 1;
   }
   const sql = `select * from tb_tv where role <= ${role}`;
-  const result = await DB.handle(sql, []);
+  const result = await Mysql.handle(sql, []);
   if (result.code === 500) {
     return response(ctx, 500, { data: null }, '信息查询失败');
   }

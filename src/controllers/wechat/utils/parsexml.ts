@@ -1,4 +1,6 @@
 import { parseString, convertableToString } from 'xml2js';
+import { LOG4 } from '@/util';
+
 // 解析XML为JSON对象
 export const parseXML = (xml: convertableToString) => {
   return new Promise((resolve, reject) => {

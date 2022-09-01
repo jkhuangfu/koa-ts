@@ -1,6 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import * as Koa from 'koa';
 import mailConfig from '@/config/mail';
+import { getParams, redis, response, LOG4 } from '@/util';
 
 const mailTransport = nodemailer.createTransport(mailConfig);
 const randomCode = (): string => {
@@ -34,7 +35,7 @@ const sendCode = async (ctx: Koa.Context) => {
           LOG4.http.error('Unable to send email: ' + err);
           resolve({ code: 400, data: null, msg: '发送失败' });
         } else {
-          const getCount = await redisDb.get(`${email}_count`);
+          const getCount = await redis.get(`${email}_count`);
           const sendCounts: any = getCount ? getCount : 0;
           if (sendCounts >= 5) {
             return resolve({ code: 401, data: null, msg: '超过发送次数，明日再试' });
@@ -43,7 +44,7 @@ const sendCode = async (ctx: Koa.Context) => {
           const oneDay = 24 * 60 * 60;
           const now = new Date();
           const nowSecond = now.getHours() * 60 * 60 + now.getMinutes() * 60 + now.getSeconds();
-          await Promise.all([redisDb.set(email, code, 5 * 60), redisDb.set(`${email}_count`, count, oneDay - nowSecond)]);
+          await Promise.all([redis.set(email, code, 5 * 60), redis.set(`${email}_count`, count, oneDay - nowSecond)]);
           return resolve({ code: 200, data: null, msg: '发送成功' });
         }
       }

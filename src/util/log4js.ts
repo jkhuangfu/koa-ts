@@ -1,10 +1,5 @@
 import * as Log4js from 'log4js';
-interface LOG4METHODS {
-  app: Log4js.Logger;
-  http: Log4js.Logger;
-  error: Log4js.Logger;
-  [key: string]: Log4js.Logger;
-}
+
 Log4js.configure({
   appenders: {
     stdout: {
@@ -47,7 +42,7 @@ Log4js.configure({
     error: { appenders: ['stdout', 'error'], level: 'error' }
   }
 });
-const log4: LOG4METHODS = {
+const log4 = {
   app: Log4js.getLogger('app'),
   http: Log4js.getLogger('http'),
   error: Log4js.getLogger('error')

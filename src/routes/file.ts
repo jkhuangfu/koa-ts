@@ -2,6 +2,7 @@ import * as Koa from 'koa';
 import { Controller, Request } from '@/decorators';
 import FileController from '@/controllers/file';
 import '@/controllers/watcher';
+import { response } from '@/util';
 @Controller('/file')
 export default class File {
   @Request('/multi/upload', 'post', { log: false })

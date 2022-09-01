@@ -1,3 +1,5 @@
+import { $http, LOG4, redis } from '@/util';
+
 export const getTicket = async (token: string) => {
   LOG4.http.info('===获取ticket====token=>' + token);
   const url = `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${token}&type=jsapi`;
@@ -8,6 +10,6 @@ export const getTicket = async (token: string) => {
     return false;
   }
   LOG4.http.info('ticket===' + data.ticket);
-  await redisDb.set('jsapi_ticket', data.ticket, 7200); // 放入缓存7200s有效期
+  await redis.set('jsapi_ticket', data.ticket, 7200); // 放入缓存7200s有效期
   return data.ticket;
 };

@@ -1,5 +1,6 @@
 import * as Koa from 'koa';
 import { dev, prod } from '@/config/auth';
+import { getParams, encryption, $http, LOG4 } from '@/util';
 const { NODE_ENV } = process.env;
 const {
   ding: { appkey, appsecret, loginAppId, loginAppSecret }

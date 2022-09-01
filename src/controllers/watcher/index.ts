@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as chokidar from 'chokidar';
 
 import * as AdmZip from 'adm-zip';
+import { LOG4 } from '@/util';
 let ready: boolean = false;
 const WATCH_PATH: string = path.join(process.cwd(), '/src/upload/');
 // 创建上传目录

@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import { reply, Signature, openid, getSessionKey, wxbizDataCrypt } from '@/controllers/wechat';
 import { Controller, Request } from '@/decorators';
+import { encryption, getParams, LOG4, response } from '@/util';
 
 // 微信服务接口加密校验
 const getSignature = (timestamp: string | string[], nonce: string | string[], token: string | string[]) => {

@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import * as Koa from 'koa';
+import { $http, Mysql, response } from '@/util';
 
 const spiderData = async (ctx: Koa.Context) => {
   const html: any = await $http.get('http://ivi.bupt.edu.cn/');
@@ -22,8 +23,8 @@ const spiderData = async (ctx: Koa.Context) => {
     const { name, url, type } = item;
     insert += `('${name}','${url}','${type}',1)${index < result.length - 1 ? ',' : ''}`;
   });
-  await DB.handle(clear, []);
-  await DB.handle(insert, []);
+  await Mysql.handle(clear, []);
+  await Mysql.handle(insert, []);
 
   response(ctx, 200, { data: result });
 };
