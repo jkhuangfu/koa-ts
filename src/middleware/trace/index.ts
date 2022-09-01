@@ -13,8 +13,8 @@ export default async (ctx: Koa.Context, next: Koa.Next) => {
     if (status >= 400) {
       return (ctx.body = { url: `${path}`, status, msg: ctx.message, timestamp: Date.now() });
     }
-  } catch (err) {
-    ctx.status = err.statusCode || err.status || 500;
+  } catch (err: any) {
+    ctx.status = err?.statusCode || err?.status || 500;
     ctx.type = 'json';
     ctx.body = {
       code: ctx.response.status,

@@ -10,6 +10,8 @@ import middleware from '@/middleware';
 import io from '@/controllers/socket/socket-io';
 // import '@/bull';
 
+// import qpdf from 'node-qpdf2';
+
 (async () => {
   const app = new Koa();
   const server = http.createServer(app.callback());
