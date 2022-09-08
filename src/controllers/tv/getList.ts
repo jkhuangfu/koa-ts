@@ -1,9 +1,10 @@
 import * as Koa from 'koa';
-import { JsonWebToken, Mysql, response } from '@/util';
+import { verify } from 'jsonwebtoken';
+import { Mysql, response } from '@/util';
 
 const getTvList = async (ctx: Koa.Context) => {
   const { authorization } = ctx.header;
-  const user = authorization && (await JsonWebToken.verify(authorization.replace(/\"/g, '')));
+  const user = authorization && verify(authorization.replace(/\"/g, ''), ctx.JWT_SECRET_KEY);
   let role: number = 0;
   if (user) {
     // 非VIP

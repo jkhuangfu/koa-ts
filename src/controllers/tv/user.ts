@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import * as uuid from 'uuid';
-import { getParams, response, Mysql, redis, JsonWebToken } from '@/util';
+import { sign, verify } from 'jsonwebtoken';
+import { getParams, response, Mysql, redis } from '@/util';
 
 const tvUser = {
   login: async (ctx: Koa.Context) => {
@@ -26,12 +27,12 @@ const tvUser = {
 
     const generateTime = Date.now();
     const uid = uuid.v4();
-    const jToken: any = await JsonWebToken.generate({ g_t: generateTime, u_id: uid });
+    const jToken: any = sign({ g_t: generateTime, u_id: uid }, ctx.JWT_SECRET_KEY);
     return response(ctx, 200, { data: jToken }, '登录成功');
   },
   checkLogin: async (ctx: Koa.Context) => {
     const { authorization } = ctx.header;
-    const user = authorization && (await JsonWebToken.verify(authorization.replace(/\"/g, '')));
+    const user = authorization && verify(authorization.replace(/\"/g, ''), ctx.JWT_SECRET_KEY);
     if (authorization && user) {
       return response(ctx, 200, { data: null }, '登录成功');
     } else {

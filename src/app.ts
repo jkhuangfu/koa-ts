@@ -15,6 +15,8 @@ import { LOG4 } from '@/util';
 const app = new Koa();
 const server = http.createServer(app.callback());
 app.keys = ['W@7712duagdb6hddhgW!'];
+// 全局变量
+app.context.JWT_SECRET_KEY = '@h7676_77R#$';
 io(server);
 
 app

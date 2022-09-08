@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import * as uuid from 'uuid';
-import { getParams, response, Mysql, LOG4, encryption, redis, JsonWebToken, Session } from '@/util';
+import { sign } from 'jsonwebtoken';
+import { getParams, response, Mysql, LOG4, encryption, redis, Session } from '@/util';
 
 export default class UserController {
   public static async Login(ctx: Koa.Context) {
@@ -27,7 +28,6 @@ export default class UserController {
     if (!wx_id) {
       return response(ctx, 203, { data: null }, '账号信息错误');
     }
-    console.log(encryption.hash(passWord + '_drnet', 'md5'));
     if (pass_word !== encryption.hash(passWord + '_drnet', 'md5')) {
       return response(ctx, 204, { data: null }, '账号信息错误');
     }
@@ -43,7 +43,7 @@ export default class UserController {
     if (await redis.exits(id + '.jwt_token')) await redis.del(id + '.jwt_token');
 
     // 生成token信息
-    const jToken = await JsonWebToken.generate({ userId: id, generateTime, uid });
+    const jToken = sign({ userId: id, generateTime, uid }, ctx.JWT_SECRET_KEY);
     await redis.set(id + '.jwt_token', jToken, 7 * 24 * 60 * 60 * 1000);
 
     return response(ctx, 200, { data: jToken }, '登录成功');
@@ -74,7 +74,7 @@ export default class UserController {
       return response(ctx, 500, { data: null }, '注册失败(插入)');
     }
     const generateTime = Date.now();
-    const token = await JsonWebToken.generate({ userId: insertResult.result.insertId, generateTime, userName: nickName, uid: uuid.v4() });
+    const token = sign({ userId: insertResult.result.insertId, generateTime, userName: nickName, uid: uuid.v4() }, ctx.JWT_SECRET_KEY);
     await redis.set(insertResult.result.insertId + '.jwt_token', token, 7 * 24 * 60 * 60 * 1000);
     return response(ctx, 200, { data: { Token: token } }, '注册成功');
   }

@@ -5,7 +5,7 @@ import { Controller, Request } from '@/decorators';
 import sendCode from '@/controllers/mail';
 import { getUserDetailByUserid } from '@/controllers/oauth/ding';
 
-import { redis, LOG4, Session, response } from '@/util';
+import { LOG4, Session, response } from '@/util';
 
 @Controller('/common')
 export default class Common {
@@ -16,7 +16,7 @@ export default class Common {
       color: true,
       background: 'rgba(0,0,0,0)' // 透明色背景
     });
-    redis.set('class-test', 222);
+
     LOG4.http.info('======获取验证码=====' + creatCaptcha.text);
     Session.set(ctx, 'img', creatCaptcha.text, 1 * 60 * 1000); // 存储验证码到session 有效期1分钟
     ctx.type = 'svg';

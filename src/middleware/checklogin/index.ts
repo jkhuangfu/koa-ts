@@ -1,5 +1,6 @@
 import * as Koa from 'koa';
-import { JsonWebToken, redis } from '@/util';
+import { verify } from 'jsonwebtoken';
+import { redis } from '@/util';
 
 /**
  * @name jwtCheck
@@ -9,7 +10,7 @@ import { JsonWebToken, redis } from '@/util';
 
 const jwtCheck = async (ctx: Koa.Context, next: Koa.Next) => {
   const { authorization } = ctx.header;
-  const user: any = authorization && (await JsonWebToken.verify(authorization));
+  const user: any = authorization && verify(authorization, ctx.JWT_SECRET_KEY);
   const redisInfo = user && (await redis.get(`${user.userId}.jwt_token`));
   if (!authorization || !user || !redisInfo || redisInfo !== authorization) {
     ctx.status = 401;
