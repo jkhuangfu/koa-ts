@@ -139,14 +139,14 @@ export class RedisDbImpl implements RedisDb {
    * @param key 键
    * @return Promise<string | boolean | null>
    */
-  get(key: string): Promise<string | boolean | null> {
-    return new Promise((resolve: (value: string | boolean | null) => void) => {
+  get(key: string): Promise<string> {
+    return new Promise((resolve: (value: string) => void) => {
       this.client.get(key, (err, result) => {
         if (err) {
           LOG4.http.error('redis获取失败：' + err);
-          return resolve(false);
+          return resolve('');
         }
-        resolve(result);
+        resolve(result || '');
       });
     });
   }
