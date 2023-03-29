@@ -33,9 +33,9 @@ interface RedisDb {
   /**
    * @description 获取对应value
    * @param key 键
-   * @return Promise<string | boolean | null>
+   * @return Promise<string>
    */
-  get(key: string): Promise<string | boolean | null>;
+  get(key: string): Promise<string>;
 
   /**
    * @description 判断是否存在该key
@@ -137,7 +137,7 @@ export class RedisDbImpl implements RedisDb {
   /**
    * @description 获取对应value
    * @param key 键
-   * @return Promise<string | boolean | null>
+   * @return Promise<string>
    */
   get(key: string): Promise<string> {
     return new Promise((resolve: (value: string) => void) => {
