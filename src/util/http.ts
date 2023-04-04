@@ -1,7 +1,7 @@
 import axios from 'axios';
-import LOG4 from './log4js'
+import LOG4 from './log4js';
 
-const http = axios.create({ timeout: 5000 });
+const http = axios.create();
 
 // 添加响应拦截器
 http.interceptors.response.use(

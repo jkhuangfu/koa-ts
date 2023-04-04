@@ -8,7 +8,8 @@ client.on('error', (err: Error) => {
   LOG4.app.error('redis error：' + err);
   process.exit(1);
 });
-client.on('connect', () => {
+// 不使用connect原因：不管链接成功与否都会走connect
+client.on('ready', () => {
   LOG4.app.info('redis连接成功...');
 });
 

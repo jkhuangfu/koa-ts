@@ -54,6 +54,7 @@
     "koa-session": "^6.1.0",
     "koa-static": "^5.0.0",
     "koa-views": "^7.0.1",
+    "koa2-timeout": "^0.1.6",
     "log4js": "^6.3.0",
     "module-alias": "^2.2.2",
     "mysql": "^2.18.1",

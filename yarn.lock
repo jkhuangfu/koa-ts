@@ -2236,6 +2236,13 @@ koa-views@^7.0.1:
     pretty "^2.0.0"
     resolve-path "^1.4.0"
 
+koa2-timeout@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npmjs.org/koa2-timeout/-/koa2-timeout-0.1.6.tgz#dad1be747545ae7d88e554f219bbd5a0e6b417ba"
+  integrity sha512-RO7hFYsgQqA+TkGV2KZylIhZ5+Zi+Ku6lEPW2Xz/iueFwtM58QLXfQhYDc11bfaeVfRwTGSz3q4r8PFOdhFKcA==
+  dependencies:
+    "@types/koa" "*"
+
 koa@^2.13.1:
   version "2.13.4"
   resolved "https://registry.npmjs.org/koa/-/koa-2.13.4.tgz#ee5b0cb39e0b8069c38d115139c774833d32462e"
